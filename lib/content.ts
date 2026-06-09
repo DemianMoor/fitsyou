@@ -83,6 +83,123 @@ export async function getStories(): Promise<Article[] | null> {
   }
 }
 
+// ── Catalog types (Phase 3a; brand-specific tables in the Fits You DB) ───────
+export type MealKit = {
+  slug: string;
+  name: string;
+  tagline: string | null;
+  description: string | null;
+  servings: number | null;
+  prep_minutes: number | null;
+  dietary_tags: string[];
+  nutrition: Record<string, number> | null;
+  price_cents: number | null;
+  featured: boolean;
+  image_url: string | null;
+  image_alt: string | null;
+};
+
+export type Supplement = {
+  slug: string;
+  name: string;
+  benefit_statement: string | null;
+  description: string | null;
+  ingredients: unknown;
+  serving_size: string | null;
+  price_cents: number | null;
+  category: string | null;
+  requires_dshea_disclaimer: boolean;
+  image_url: string | null;
+  image_alt: string | null;
+};
+
+export type TrainingPlan = {
+  slug: string;
+  name: string;
+  focus: string | null;
+  level: string | null;
+  weeks: number | null;
+  sessions_per_week: number | null;
+  equipment: string[];
+  description: string | null;
+  image_url: string | null;
+  image_alt: string | null;
+};
+
+async function getPublished<T>(table: string, columns: string): Promise<T[] | null> {
+  if (!hasSupabaseEnv()) return null;
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data, error } = await supabase
+      .from(table)
+      .select(columns)
+      .eq("status", "published")
+      .order("sort_order", { ascending: true })
+      .order("published_at", { ascending: false });
+    if (error) throw error;
+    return (data as T[]) ?? [];
+  } catch {
+    return null;
+  }
+}
+
+export function getMealKits(): Promise<MealKit[] | null> {
+  return getPublished<MealKit>(
+    "meal_kits",
+    "slug,name,tagline,description,servings,prep_minutes,dietary_tags,nutrition,price_cents,featured,image_url,image_alt",
+  );
+}
+
+export function getSupplements(): Promise<Supplement[] | null> {
+  return getPublished<Supplement>(
+    "supplements",
+    "slug,name,benefit_statement,description,ingredients,serving_size,price_cents,category,requires_dshea_disclaimer,image_url,image_alt",
+  );
+}
+
+export function getTrainingPlans(): Promise<TrainingPlan[] | null> {
+  return getPublished<TrainingPlan>(
+    "training_plans",
+    "slug,name,focus,level,weeks,sessions_per_week,equipment,description,image_url,image_alt",
+  );
+}
+
+// ── Feature flags ────────────────────────────────────────────────────────────
+// Read from the brand's OWN site_settings (key='features'), mirroring how
+// analytics IDs live per-brand (MASTER-SPEC §7) — NOT control-plane brand_config,
+// which the public site never reads. B-ready: a future shared admin would write
+// site_settings.features via getBrandClient. Defaults ON (Fits You has all four).
+export type FeatureFlags = {
+  has_meal_kits: boolean;
+  has_supplements: boolean;
+  has_training: boolean;
+  has_plan_builder: boolean;
+};
+
+const DEFAULT_FLAGS: FeatureFlags = {
+  has_meal_kits: true,
+  has_supplements: true,
+  has_training: true,
+  has_plan_builder: true,
+};
+
+export async function getFeatureFlags(): Promise<FeatureFlags> {
+  if (!hasSupabaseEnv()) return DEFAULT_FLAGS;
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("site_settings")
+      .select("value")
+      .eq("key", "features")
+      .maybeSingle();
+    if (error) throw error;
+    const value = (data?.value ?? {}) as Partial<FeatureFlags>;
+    return { ...DEFAULT_FLAGS, ...value };
+  } catch {
+    return DEFAULT_FLAGS;
+  }
+}
+
 /** Format an ISO timestamp as e.g. "Nov 12, 2024" (empty string if null). */
 export function formatDate(iso: string | null): string {
   if (!iso) return "";

@@ -41,6 +41,41 @@ export default function PlanBuilderPage() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(initForm);
 
+  // Plan Builder intake capture (Phase 3a). Non-promissory: we capture the lead
+  // and show an illustrative plan shape — no guaranteed results, no loss rates.
+  const [contact, setContact] = useState({ email: "", phone: "", consentEmail: false, consentSms: false, website: "" });
+  const [submitState, setSubmitState] = useState<"idle" | "submitting" | "done" | "error">("idle");
+  const [submitErr, setSubmitErr] = useState("");
+
+  async function submitIntake() {
+    if (!contact.consentEmail) { setSubmitState("error"); setSubmitErr("Please agree to be contacted by email."); return; }
+    setSubmitState("submitting"); setSubmitErr("");
+    try {
+      const res = await fetch("/api/intake", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: contact.email,
+          phone: contact.phone,
+          goals: form.goals,
+          diet: form.diet,
+          allergies: form.allergies,
+          training_frequency: form.freq,
+          training_type: form.type,
+          metrics: { age: form.age, weight_lbs: form.weight, height_ft: form.heightFt, height_in: form.heightIn, sex: form.sex },
+          consent_email: contact.consentEmail,
+          consent_sms: contact.consentSms,
+          website: contact.website, // honeypot
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) { setSubmitState("error"); setSubmitErr(json.error ?? "Something went wrong."); return; }
+      setSubmitState("done");
+    } catch {
+      setSubmitState("error"); setSubmitErr("Network error. Please try again.");
+    }
+  }
+
   const canContinue = () => {
     if (step === 0) return form.age && form.weight && form.sex;
     if (step === 1) return form.goals.length > 0;
@@ -217,9 +252,43 @@ export default function PlanBuilderPage() {
                 <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.3)", lineHeight: 1.7, margin: "0 0 32px" }}>
                   Sample targets based on your inputs. Actual targets are finalized by our registered dietitian team. Results vary — individual outcomes depend on many factors including adherence, health history, and lifestyle.
                 </p>
-                <button onClick={() => navigate("/pricing")} style={{ background: EMBER, color: BONE, border: "none", cursor: "pointer", fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", padding: "18px 32px", borderRadius: 4, display: "flex", alignItems: "center", gap: 8, width: "100%", justifyContent: "center", transition: "background 0.15s" }} onMouseEnter={e => { e.currentTarget.style.background = "#C04F2A"; }} onMouseLeave={e => { e.currentTarget.style.background = EMBER; }}>
-                  Get started — see pricing <ArrowRight size={13} />
-                </button>
+                {submitState === "done" ? (
+                  <div style={{ textAlign: "center" }}>
+                    <p style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 22, fontStyle: "italic", color: BONE, margin: "0 0 8px" }}>Your plan is saved.</p>
+                    <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 13, color: "rgba(245,242,235,0.55)", margin: "0 0 24px", lineHeight: 1.7 }}>
+                      A registered dietitian finalizes your targets. Check your email for next steps.
+                    </p>
+                    <button onClick={() => navigate("/pricing")} style={{ background: EMBER, color: BONE, border: "none", cursor: "pointer", fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", padding: "18px 32px", borderRadius: 4, display: "inline-flex", alignItems: "center", gap: 8, justifyContent: "center", transition: "background 0.15s" }} onMouseEnter={e => { e.currentTarget.style.background = "#C04F2A"; }} onMouseLeave={e => { e.currentTarget.style.background = EMBER; }}>
+                      Continue to pricing <ArrowRight size={13} />
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={e => { e.preventDefault(); submitIntake(); }}>
+                    {/* Honeypot */}
+                    <input type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" value={contact.website} onChange={e => setContact(c => ({ ...c, website: e.target.value }))} style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }} />
+                    <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,242,235,0.5)", display: "block", marginBottom: 10 }}>
+                      Save your plan — we&apos;ll send the next steps
+                    </label>
+                    <input type="email" required placeholder="your@email.com" value={contact.email} onChange={e => setContact(c => ({ ...c, email: e.target.value }))} style={{ ...inputSt, marginBottom: 12 }} />
+                    {contact.consentSms && (
+                      <input type="tel" placeholder="Mobile number" value={contact.phone} onChange={e => setContact(c => ({ ...c, phone: e.target.value }))} style={{ ...inputSt, marginBottom: 12 }} />
+                    )}
+                    <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", lineHeight: 1.55, display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 10, cursor: "pointer" }}>
+                      <input type="checkbox" required checked={contact.consentEmail} onChange={e => setContact(c => ({ ...c, consentEmail: e.target.checked }))} style={{ marginTop: 2, accentColor: BRASS }} />
+                      <span>I agree to be contacted by email about my plan. I can unsubscribe anytime. See our <a href="/trust" style={{ color: BRASS }}>Privacy Policy</a>.</span>
+                    </label>
+                    <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", lineHeight: 1.55, display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 14, cursor: "pointer" }}>
+                      <input type="checkbox" checked={contact.consentSms} onChange={e => setContact(c => ({ ...c, consentSms: e.target.checked }))} style={{ marginTop: 2, accentColor: BRASS }} />
+                      <span>(Optional) Text me updates. By checking this box I consent to receive recurring automated marketing texts from Fits You at the number provided. Consent is not a condition of purchase. Msg &amp; data rates may apply. Reply STOP to opt out.</span>
+                    </label>
+                    {submitState === "error" && (
+                      <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, color: EMBER, margin: "0 0 12px" }}>{submitErr}</p>
+                    )}
+                    <button type="submit" disabled={submitState === "submitting"} style={{ background: EMBER, color: BONE, border: "none", cursor: submitState === "submitting" ? "default" : "pointer", fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", padding: "18px 32px", borderRadius: 4, display: "flex", alignItems: "center", gap: 8, width: "100%", justifyContent: "center", opacity: submitState === "submitting" ? 0.7 : 1, transition: "background 0.15s" }} onMouseEnter={e => { if (submitState !== "submitting") e.currentTarget.style.background = "#C04F2A"; }} onMouseLeave={e => { e.currentTarget.style.background = EMBER; }}>
+                      {submitState === "submitting" ? "Saving…" : "Save my plan & see pricing"} <ArrowRight size={13} />
+                    </button>
+                  </form>
+                )}
               </div>
             </FitMark>
           </div>
