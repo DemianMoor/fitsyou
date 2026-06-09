@@ -117,6 +117,7 @@ export default async function ArticlePage({
       {/* Body (rendered from the article's stored HTML) */}
       <div style={{ background: BONE, padding: "64px 32px 112px" }}>
         <div
+          className="fy-article-body"
           style={{ maxWidth: 720, margin: "0 auto", fontFamily: "var(--font-archivo), sans-serif", fontSize: 17, color: OBSIDIAN, lineHeight: 1.8 }}
           dangerouslySetInnerHTML={{ __html: article.body }}
         />

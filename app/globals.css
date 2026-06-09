@@ -120,3 +120,23 @@
   }
 }
 
+/* Mobile guard for admin-authored article HTML (dangerouslySetInnerHTML):
+   keep long words, wide media, tables, and code blocks inside the viewport. */
+.fy-article-body {
+  overflow-wrap: anywhere;
+}
+.fy-article-body img,
+.fy-article-body video {
+  max-width: 100%;
+  height: auto;
+}
+.fy-article-body table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.fy-article-body pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
