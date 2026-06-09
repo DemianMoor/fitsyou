@@ -25,4 +25,5 @@ next-env.d.ts
 
 # local audit artifacts
 /mobile-audit
+/.playwright-mcp
 
