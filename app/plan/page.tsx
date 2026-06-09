@@ -241,16 +241,22 @@ export default function PlanBuilderPage() {
                 <h2 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 44, fontWeight: 400, color: BONE, margin: "0 0 36px", letterSpacing: "-0.025em", lineHeight: 1.0 }}>
                   Measured.<br /><em style={{ fontStyle: "italic", color: BRASS }}>Made for you.</em>
                 </h2>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 32 }}>
-                  {[["2,340 kcal","Est. daily calories"],["185g / day","Protein target"],["4 meals","Kits per week"]].map(([v, k]) => (
-                    <div key={k} style={{ background: "rgba(245,242,235,0.04)", border: "1px solid rgba(183,146,86,0.14)", borderRadius: 4, padding: "20px" }}>
-                      <div style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 24, fontWeight: 400, color: BONE, lineHeight: 1, marginBottom: 6 }}>{v}</div>
+                {/* Input-reflective plan shape — NO calorie/macro/weight targets (those
+                    are set by the dietitian team post-join). Personalized from real answers. */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 28 }}>
+                  {[
+                    { v: form.goals[0] ?? "Balanced approach", k: "Primary focus" },
+                    { v: form.diet || "No restrictions", k: "Food framework" },
+                    { v: form.freq ? `${form.freq} / week` : "Flexible cadence", k: "Training" },
+                  ].map(({ v, k }) => (
+                    <div key={k} style={{ background: "rgba(245,242,235,0.04)", border: "1px solid rgba(183,146,86,0.14)", borderRadius: 4, padding: "18px" }}>
+                      <div style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 15, fontWeight: 500, color: BONE, lineHeight: 1.3, marginBottom: 8 }}>{v}</div>
                       <div style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(245,242,235,0.38)" }}>{k}</div>
                     </div>
                   ))}
                 </div>
                 <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.3)", lineHeight: 1.7, margin: "0 0 32px" }}>
-                  Sample targets based on your inputs. Actual targets are finalized by our registered dietitian team. Results vary — individual outcomes depend on many factors including adherence, health history, and lifestyle.
+                  This is the shape of your plan. Your exact recipes, supplement stack, and training are calibrated by our registered dietitian team after you join. Results vary — individual outcomes depend on many factors including adherence, health history, and lifestyle.
                 </p>
                 {submitState === "done" ? (
                   <div style={{ textAlign: "center" }}>
