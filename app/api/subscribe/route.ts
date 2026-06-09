@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServiceClient } from "@/lib/supabase";
+import { sendSubscribeWelcome, sendOperatorAlert } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -83,6 +84,12 @@ export async function POST(request: NextRequest) {
     if (error.code === "23505") return NextResponse.json({ ok: true, already: true });
     return NextResponse.json({ error: "Something went wrong." }, { status: 500 });
   }
+
+  // Transactional email (best-effort; never blocks the response).
+  await Promise.allSettled([
+    sendSubscribeWelcome(email, row.name),
+    sendOperatorAlert("subscriber", { email, name: row.name, consent_sms: row.consent_sms, source: row.source }),
+  ]);
 
   return NextResponse.json({ ok: true });
 }

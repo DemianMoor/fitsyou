@@ -38,11 +38,11 @@ const PLANS = [
 ];
 
 const FAQ_PRICING = [
-  ["Is there a minimum commitment?", "No. You can pause or cancel your plan at any time from your account. We don't believe in trapping you in something that isn't working."],
-  ["What's in the supplement stack?", "Your formulation is specific to you — not a standard product. It's reviewed by a registered dietitian and ships monthly."],
-  ["How many meals per week?", "Essentials and Kits + Stack include 4 meals per week. Full Fit includes 6. You can adjust your meal count after your first box."],
+  ["Is there a minimum commitment?", "No lock-in. Your plan flexes with you, and you're never trapped in something that isn't working."],
+  ["What's in the supplement stack?", "Your formulation is specific to you — not a standard product. It's reviewed by a registered dietitian."],
+  ["How many meals per week?", "Essentials and Kits + Stack are built around 4 meals per week. Full Fit is built around 6. Your meal count is part of your tailored plan."],
   ["Is delivery included?", "Yes. Delivery is included in all plan prices, across all 50 states."],
-  ["Can I switch plans?", "Yes — any time. Changes take effect at the next billing cycle."],
+  ["Can I change my plan?", "Yes — any time. Build your plan and our team helps you adjust it as your goals shift."],
 ];
 
 export default function PricingPage() {
@@ -134,14 +134,14 @@ export default function PricingPage() {
                     else { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = OBSIDIAN; }
                   }}
                 >
-                  Start with {plan.name} <ArrowRight size={13} />
+                  Build your plan <ArrowRight size={13} />
                 </button>
               </div>
             ))}
           </div>
 
           <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, color: ASH, textAlign: "center", marginTop: 24, lineHeight: 1.65 }}>
-            All plans include free delivery. Cancel or pause anytime from your account — no calls required.
+            All plans include free delivery across all 50 states. No lock-in — your plan flexes with you, no calls required.
           </p>
         </div>
       </section>

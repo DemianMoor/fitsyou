@@ -247,7 +247,7 @@ export default function PlanBuilderPage() {
                   {[
                     { v: form.goals[0] ?? "Balanced approach", k: "Primary focus" },
                     { v: form.diet || "No restrictions", k: "Food framework" },
-                    { v: form.freq ? `${form.freq} / week` : "Flexible cadence", k: "Training" },
+                    { v: form.freq ? `${form.freq} / week${form.type ? ` · ${form.type}` : ""}` : (form.type || "Flexible cadence"), k: "Training" },
                   ].map(({ v, k }) => (
                     <div key={k} style={{ background: "rgba(245,242,235,0.04)", border: "1px solid rgba(183,146,86,0.14)", borderRadius: 4, padding: "18px" }}>
                       <div style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 15, fontWeight: 500, color: BONE, lineHeight: 1.3, marginBottom: 8 }}>{v}</div>
@@ -255,6 +255,12 @@ export default function PlanBuilderPage() {
                     </div>
                   ))}
                 </div>
+                {(form.goals.length > 1 || form.allergies) && (
+                  <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, color: "rgba(245,242,235,0.5)", lineHeight: 1.6, margin: "0 0 20px" }}>
+                    {form.goals.length > 1 && <>Also working toward: {form.goals.slice(1).join(", ")}. </>}
+                    {form.allergies && <>Avoiding: {form.allergies}.</>}
+                  </p>
+                )}
                 <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.3)", lineHeight: 1.7, margin: "0 0 32px" }}>
                   This is the shape of your plan. Your exact recipes, supplement stack, and training are calibrated by our registered dietitian team after you join. Results vary — individual outcomes depend on many factors including adherence, health history, and lifestyle.
                 </p>
@@ -265,7 +271,7 @@ export default function PlanBuilderPage() {
                       A registered dietitian finalizes your targets. Check your email for next steps.
                     </p>
                     <button onClick={() => navigate("/pricing")} style={{ background: EMBER, color: BONE, border: "none", cursor: "pointer", fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", padding: "18px 32px", borderRadius: 4, display: "inline-flex", alignItems: "center", gap: 8, justifyContent: "center", transition: "background 0.15s" }} onMouseEnter={e => { e.currentTarget.style.background = "#C04F2A"; }} onMouseLeave={e => { e.currentTarget.style.background = EMBER; }}>
-                      Continue to pricing <ArrowRight size={13} />
+                      See plans &amp; pricing <ArrowRight size={13} />
                     </button>
                   </div>
                 ) : (
@@ -281,7 +287,7 @@ export default function PlanBuilderPage() {
                     )}
                     <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", lineHeight: 1.55, display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 10, cursor: "pointer" }}>
                       <input type="checkbox" required checked={contact.consentEmail} onChange={e => setContact(c => ({ ...c, consentEmail: e.target.checked }))} style={{ marginTop: 2, accentColor: BRASS }} />
-                      <span>I agree to be contacted by email about my plan. I can unsubscribe anytime. See our <a href="/trust" style={{ color: BRASS }}>Privacy Policy</a>.</span>
+                      <span>I agree to be contacted by email about my plan. I can unsubscribe anytime. See our <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a>.</span>
                     </label>
                     <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", lineHeight: 1.55, display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 14, cursor: "pointer" }}>
                       <input type="checkbox" checked={contact.consentSms} onChange={e => setContact(c => ({ ...c, consentSms: e.target.checked }))} style={{ marginTop: 2, accentColor: BRASS }} />
@@ -291,7 +297,7 @@ export default function PlanBuilderPage() {
                       <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, color: EMBER, margin: "0 0 12px" }}>{submitErr}</p>
                     )}
                     <button type="submit" disabled={submitState === "submitting"} style={{ background: EMBER, color: BONE, border: "none", cursor: submitState === "submitting" ? "default" : "pointer", fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", padding: "18px 32px", borderRadius: 4, display: "flex", alignItems: "center", gap: 8, width: "100%", justifyContent: "center", opacity: submitState === "submitting" ? 0.7 : 1, transition: "background 0.15s" }} onMouseEnter={e => { if (submitState !== "submitting") e.currentTarget.style.background = "#C04F2A"; }} onMouseLeave={e => { e.currentTarget.style.background = EMBER; }}>
-                      {submitState === "submitting" ? "Saving…" : "Save my plan & see pricing"} <ArrowRight size={13} />
+                      {submitState === "submitting" ? "Saving…" : "Get my tailored plan"} <ArrowRight size={13} />
                     </button>
                   </form>
                 )}

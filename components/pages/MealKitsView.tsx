@@ -51,7 +51,7 @@ export function MealKitsView({ meals }: { meals: MealCard[] | null }) {
               Every recipe hits your exact macro targets. Fresh ingredients, precise portions, zero guesswork. You cook it. It fits.
             </p>
             <button onClick={() => navigate("/plan")} style={{ background: EMBER, color: BONE, border: "none", cursor: "pointer", fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", padding: "14px 28px", borderRadius: 4, display: "inline-flex", alignItems: "center", gap: 8, transition: "background 0.15s" }} onMouseEnter={e => { e.currentTarget.style.background = "#C04F2A"; }} onMouseLeave={e => { e.currentTarget.style.background = EMBER; }}>
-              Get your kit <ArrowRight size={13} />
+              Build your plan <ArrowRight size={13} />
             </button>
           </div>
         </div>
@@ -78,7 +78,7 @@ export function MealKitsView({ meals }: { meals: MealCard[] | null }) {
                 onMouseLeave={e => { const img = e.currentTarget.querySelector("img") as HTMLElement; if (img) img.style.transform = "scale(1)"; }}
               >
                 <div style={{ aspectRatio: "3/4", position: "relative", overflow: "hidden" }}>
-                  <BrandImage src={meal.img} alt={meal.name} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover", opacity: 0.62, transition: "transform 0.6s ease" }} />
+                  <BrandImage src={meal.img} alt={meal.name} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover", opacity: 0.85, transition: "transform 0.6s ease" }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(12,14,16,1) 0%, transparent 58%)" }} />
                 </div>
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "36px" }}>

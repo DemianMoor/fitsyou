@@ -42,12 +42,12 @@ export function Footer() {
               Personalized meal kits, supplements, and training — calibrated precisely to you. Delivered across the US.
             </p>
             <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.25)", lineHeight: 1.65, maxWidth: 300, margin: 0 }}>
-              Results vary. Individual outcomes depend on many factors. Supplement statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease.
+              Results vary. Individual outcomes depend on many factors. Fits You provides general information, not medical advice — consult a qualified healthcare provider before starting any nutrition, supplement, or training program. Supplement statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease.
             </p>
           </div>
           {col("Program", [["/how","How It Fits"],["/plan","Plan Builder"],["/meal-kits","Meal Kits"],["/supplements","Supplements"],["/training","Training"]])}
           {col("Company", [["/about","About"],["/blog","Journal"],["/stories","Stories"],["/pricing","Pricing"],["/trust","FAQ"]])}
-          {col("Legal", [["/trust","Privacy Policy"],["/trust","Terms of Service"],["/trust","Results Disclaimer"]])}
+          {col("Legal", [["/privacy","Privacy Policy"],["/terms","Terms of Service"],["/trust","Results Disclaimer"]])}
         </div>
 
         <div style={{ borderTop: "1px solid rgba(183,146,86,0.12)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>

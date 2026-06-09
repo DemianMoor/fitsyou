@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServiceClient } from "@/lib/supabase";
+import { sendIntakeConfirmation, sendOperatorAlert } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -85,5 +86,19 @@ export async function POST(request: NextRequest) {
   if (error) {
     return NextResponse.json({ error: "Something went wrong." }, { status: 500 });
   }
+
+  // Transactional email (best-effort; never blocks the response).
+  await Promise.allSettled([
+    sendIntakeConfirmation(email),
+    sendOperatorAlert("plan_builder", {
+      email,
+      phone: body.phone,
+      goals: body.goals,
+      diet: body.diet,
+      training_frequency: body.training_frequency,
+      training_type: body.training_type,
+    }),
+  ]);
+
   return NextResponse.json({ ok: true });
 }

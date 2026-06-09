@@ -201,7 +201,7 @@ export default function HomePage() {
                 onMouseEnter={e => { const img = e.currentTarget.querySelector("img") as HTMLElement; if (img) img.style.transform = "scale(1.05)"; }}
                 onMouseLeave={e => { const img = e.currentTarget.querySelector("img") as HTMLElement; if (img) img.style.transform = "scale(1)"; }}
               >
-                <BrandImage src={card.img} alt={card.alt} fill sizes="(max-width: 900px) 100vw, 33vw" style={{ objectFit: "cover", opacity: 0.55, transition: "transform 0.55s ease" }} />
+                <BrandImage src={card.img} alt={card.alt} fill sizes="(max-width: 900px) 100vw, 33vw" style={{ objectFit: "cover", opacity: 0.82, transition: "transform 0.55s ease" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(16,17,20,0.95) 0%, transparent 55%)" }} />
                 <div style={{ position: "absolute", bottom: 32, left: 32, right: 32 }}>
                   <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS }}>{card.tag}</span>

@@ -131,7 +131,7 @@ export function SubscribePopup() {
 
               <label style={labelStyle}>
                 <input name="consent_email" type="checkbox" required style={{ marginTop: 2, accentColor: BRASS }} />
-                <span>I agree to receive marketing emails from Fits You. I can unsubscribe anytime. See our <a href="/trust" style={{ color: BRASS }}>Privacy Policy</a>.</span>
+                <span>I agree to receive marketing emails from Fits You. I can unsubscribe anytime. See our <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a>.</span>
               </label>
 
               <label style={labelStyle}>
