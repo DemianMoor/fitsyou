@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+
+  /* Fits You brand palette (brand book) */
+  --obsidian: #101114;
+  --bone: #f5f2eb;
+  --ember: #d9603b;
+  --brass: #b79256;
+  --pine: #2f3a30;
+  --ash: #6b6a66;
+  --bone-2: #e7e1d5;
+
+  /* Semantic tokens (shadcn-style), mapped to brand */
+  --background: #f5f2eb;
+  --foreground: #101114;
+  --card: #f5f2eb;
+  --card-foreground: #101114;
+  --popover: #f5f2eb;
+  --popover-foreground: #101114;
+  --primary: #101114;
+  --primary-foreground: #f5f2eb;
+  --secondary: #e7e1d5;
+  --secondary-foreground: #101114;
+  --muted: #e7e1d5;
+  --muted-foreground: #6b6a66;
+  --accent: #d9603b;
+  --accent-foreground: #f5f2eb;
+  --destructive: #d9603b;
+  --destructive-foreground: #f5f2eb;
+  --border: rgba(16, 17, 20, 0.12);
+  --input: transparent;
+  --input-background: #e7e1d5;
+  --switch-background: #b79256;
+  --ring: #b79256;
+
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --radius: 0.25rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+
+  /* Brand palette as Tailwind color utilities (bg-obsidian, text-brass, …) */
+  --color-obsidian: var(--obsidian);
+  --color-bone: var(--bone);
+  --color-bone-2: var(--bone-2);
+  --color-ember: var(--ember);
+  --color-brass: var(--brass);
+  --color-pine: var(--pine);
+  --color-ash: var(--ash);
+
+  /* Fonts (next/font exposes these on <html>) */
+  --font-fraunces: var(--font-fraunces);
+  --font-archivo: var(--font-archivo);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-archivo), "Archivo", sans-serif;
+  }
+
+  /* Default element typography — Tailwind utilities still override these. */
+  h1 { font-size: var(--text-2xl); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  h2 { font-size: var(--text-xl); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  h3 { font-size: var(--text-lg); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  h4 { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  label { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  button { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
+  input { font-size: var(--text-base); font-weight: var(--font-weight-normal); line-height: 1.5; }
+}
