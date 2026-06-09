@@ -34,7 +34,7 @@ export function LegalPage({
       <section style={{ background: "#1A1E23", borderBottom: "1px solid rgba(183,146,86,0.15)" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "14px 32px" }}>
           <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.5)", margin: 0, lineHeight: 1.6 }}>
-            <strong style={{ color: BRASS, fontWeight: 700 }}>DRAFT</strong> — starting language pending review by counsel. Not yet final legal advice.
+            <strong style={{ color: BRASS, fontWeight: 700 }}>DRAFT · COUNSEL COPY HERE</strong> — starting language for counsel to finalize before launch. Not yet final legal advice.
           </p>
         </div>
       </section>
