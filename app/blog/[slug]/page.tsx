@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { getArticleBySlug, formatDate } from "@/lib/content";
 import { hasSupabaseEnv } from "@/lib/supabase";
 import { FitMark } from "@/components/FitMark";
+import { BrandImage } from "@/components/BrandImage";
 
 const BRASS = "#B79256", OBSIDIAN = "#101114", BONE = "#F5F2EB", ASH = "#6B6A66";
 
@@ -92,7 +93,9 @@ export default async function ArticlePage({
       {article.image_url && (
         <div style={{ background: BONE }}>
           <div style={{ maxWidth: 960, margin: "0 auto" }}>
-            <img src={article.image_url} alt={article.image_alt ?? article.title} style={{ width: "100%", height: "auto", display: "block" }} />
+            <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden" }}>
+              <BrandImage src={article.image_url} alt={article.image_alt ?? article.title} fill priority sizes="(max-width: 1000px) 100vw, 960px" style={{ objectFit: "cover" }} />
+            </div>
           </div>
         </div>
       )}

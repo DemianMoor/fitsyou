@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FitMark } from "@/components/FitMark";
+import { BrandImage } from "@/components/BrandImage";
 import { ArrowRight } from "lucide-react";
 
 const BRASS = "#B79256", OBSIDIAN = "#101114", BONE = "#F5F2EB", PINE = "#2F3A30", EMBER = "#D9603B";
@@ -47,8 +48,8 @@ export function TrainingView({ protocols }: { protocols: Protocol[] | null }) {
           <div>
             <FitMark size={28} padded={false}>
               <div style={{ padding: 16 }}>
-                <img src="https://images.unsplash.com/photo-1434596922112-19c563067271?w=700&h=800&fit=crop&auto=format" alt="Athlete training — natural light, confident, strong" style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", borderRadius: 6, display: "block" }} />
-                <div style={{ position: "relative" }}>
+                <div style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden", borderRadius: 6 }}>
+                  <BrandImage src="/images/training/hero.jpg" alt="Athlete training — natural light, confident, strong" fill sizes="(max-width: 900px) 100vw, 45vw" style={{ objectFit: "cover" }} placeholderLabel="Sample" />
                   <div style={{ position: "absolute", bottom: 12, left: 12, background: "rgba(16,17,20,0.82)", padding: "8px 14px", borderRadius: 2, borderLeft: `2px solid ${BRASS}` }}>
                     <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: BRASS }}>SAMPLE — not a real client</span>
                   </div>

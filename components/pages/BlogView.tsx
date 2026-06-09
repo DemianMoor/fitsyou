@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FitMark } from "@/components/FitMark";
+import { BrandImage } from "@/components/BrandImage";
 import { ArrowRight } from "lucide-react";
 
 const BRASS = "#B79256", OBSIDIAN = "#101114", BONE = "#F5F2EB", ASH = "#6B6A66", PINE = "#2F3A30";
@@ -21,11 +22,11 @@ export type BlogPost = {
 // Placeholder content shown until the Fits You DB has published articles
 // (graceful fallback — see PHASE-0-RECON.md). Replaced by real `articles` rows.
 const FALLBACK_POSTS: BlogPost[] = [
-  { slug: "protein-timing", category: "Nutrition", title: "Protein timing: what the evidence actually says", excerpt: "The 30-minute anabolic window is mostly marketing. What the research shows is more nuanced — and more useful — than the gym-floor version.", date: "Nov 12, 2024", readTime: "8 min", img: "https://images.unsplash.com/photo-1590394072807-12f9869e3907?w=800&h=500&fit=crop&auto=format", featured: true },
-  { slug: "creatine-evidence", category: "Supplements", title: "Creatine: the most studied supplement in sports science", excerpt: "Decades of research and a remarkably consistent finding. Why creatine earns its place in a personalized stack — and who doesn't need it.", date: "Oct 28, 2024", readTime: "6 min", img: "https://images.unsplash.com/photo-1585830812369-b88fce3bee22?w=600&h=400&fit=crop&auto=format" },
-  { slug: "progressive-overload", category: "Training", title: "Progressive overload is the only principle that matters", excerpt: "Every effective training program is a version of the same idea. Understanding it lets you evaluate any program — and build your own.", date: "Oct 14, 2024", readTime: "7 min", img: "https://images.unsplash.com/photo-1434596922112-19c563067271?w=600&h=400&fit=crop&auto=format" },
-  { slug: "sleep-recovery", category: "Recovery", title: "Sleep is the supplement most people aren't taking", excerpt: "No stack formulation overrides chronic sleep debt. What the research shows about sleep's role in body composition, performance, and nutrient utilization.", date: "Sep 30, 2024", readTime: "9 min", img: "https://images.unsplash.com/photo-1447078806655-40579c2520d6?w=600&h=400&fit=crop&auto=format" },
-  { slug: "personalization-limits", category: "Science", title: "The honest limits of personalized nutrition", excerpt: "Nutrigenomics and continuous glucose monitoring make compelling promises. Here's what the current evidence supports — and what it doesn't.", date: "Sep 16, 2024", readTime: "11 min", img: "https://images.unsplash.com/photo-1663530761401-15eefb544889?w=600&h=400&fit=crop&auto=format" },
+  { slug: "protein-timing", category: "Nutrition", title: "Protein timing: what the evidence actually says", excerpt: "The 30-minute anabolic window is mostly marketing. What the research shows is more nuanced — and more useful — than the gym-floor version.", date: "Nov 12, 2024", readTime: "8 min", img: "", featured: true },
+  { slug: "creatine-evidence", category: "Supplements", title: "Creatine: the most studied supplement in sports science", excerpt: "Decades of research and a remarkably consistent finding. Why creatine earns its place in a personalized stack — and who doesn't need it.", date: "Oct 28, 2024", readTime: "6 min", img: "" },
+  { slug: "progressive-overload", category: "Training", title: "Progressive overload is the only principle that matters", excerpt: "Every effective training program is a version of the same idea. Understanding it lets you evaluate any program — and build your own.", date: "Oct 14, 2024", readTime: "7 min", img: "" },
+  { slug: "sleep-recovery", category: "Recovery", title: "Sleep is the supplement most people aren't taking", excerpt: "No stack formulation overrides chronic sleep debt. What the research shows about sleep's role in body composition, performance, and nutrient utilization.", date: "Sep 30, 2024", readTime: "9 min", img: "" },
+  { slug: "personalization-limits", category: "Science", title: "The honest limits of personalized nutrition", excerpt: "Nutrigenomics and continuous glucose monitoring make compelling promises. Here's what the current evidence supports — and what it doesn't.", date: "Sep 16, 2024", readTime: "11 min", img: "" },
 ];
 
 export function BlogView({ posts }: { posts: BlogPost[] | null }) {
@@ -61,8 +62,8 @@ export function BlogView({ posts }: { posts: BlogPost[] | null }) {
         <section style={{ background: BONE }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0" }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 480 }}>
-              <div style={{ overflow: "hidden", position: "relative" }}>
-                <img src={featured.img} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              <div style={{ overflow: "hidden", position: "relative", minHeight: 320 }}>
+                <BrandImage src={featured.img} alt={featured.title} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent, rgba(245,242,235,0.08))" }} />
               </div>
               <div style={{ padding: "64px", display: "flex", flexDirection: "column", justifyContent: "center", background: OBSIDIAN }}>
@@ -115,8 +116,8 @@ export function BlogView({ posts }: { posts: BlogPost[] | null }) {
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(183,146,86,0.4)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,17,20,0.08)"; }}
               >
-                <div style={{ overflow: "hidden", aspectRatio: "16/9" }}>
-                  <img src={post.img} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s ease" }} />
+                <div style={{ overflow: "hidden", aspectRatio: "16/9", position: "relative" }}>
+                  <BrandImage src={post.img} alt={post.title} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover", transition: "transform 0.5s ease" }} />
                 </div>
                 <div style={{ padding: "32px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>

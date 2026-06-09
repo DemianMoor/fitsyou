@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FitMark } from "@/components/FitMark";
+import { BrandImage } from "@/components/BrandImage";
 import { ArrowRight } from "lucide-react";
 
 const BRASS = "#B79256", OBSIDIAN = "#101114", BONE = "#F5F2EB", EMBER = "#D9603B", ASH = "#6B6A66";
@@ -19,10 +20,10 @@ export type MealCard = {
 };
 
 const FALLBACK_MEALS: MealCard[] = [
-  { name: "Seared Salmon, Miso Braised Greens", tag: "High protein · Omega-rich", cal: 520, protein: 46, carb: 28, fat: 24, img: "https://images.unsplash.com/photo-1663530761401-15eefb544889?w=700&h=900&fit=crop&auto=format", placeholder: true },
-  { name: "Grass-Fed Sirloin, Roasted Root Veg", tag: "Strength recovery · Iron-forward", cal: 640, protein: 52, carb: 38, fat: 22, img: "https://images.unsplash.com/photo-1750943082231-0d84cfabc4dd?w=700&h=900&fit=crop&auto=format", placeholder: true },
-  { name: "Lemongrass Chicken, Forbidden Rice", tag: "Endurance focus · Complex carbs", cal: 580, protein: 44, carb: 58, fat: 14, img: "https://images.unsplash.com/photo-1727952846147-d406806b169a?w=700&h=900&fit=crop&auto=format", placeholder: true },
-  { name: "White Bean Stew, Herb Oil, Sourdough", tag: "Plant-forward · High fiber", cal: 480, protein: 22, carb: 68, fat: 16, img: "https://images.unsplash.com/photo-1590394072807-12f9869e3907?w=700&h=900&fit=crop&auto=format", placeholder: true },
+  { name: "Seared Salmon, Miso Braised Greens", tag: "High protein · Omega-rich", cal: 520, protein: 46, carb: 28, fat: 24, img: "", placeholder: true },
+  { name: "Grass-Fed Sirloin, Roasted Root Veg", tag: "Strength recovery · Iron-forward", cal: 640, protein: 52, carb: 38, fat: 22, img: "", placeholder: true },
+  { name: "Lemongrass Chicken, Forbidden Rice", tag: "Endurance focus · Complex carbs", cal: 580, protein: 44, carb: 58, fat: 14, img: "", placeholder: true },
+  { name: "White Bean Stew, Herb Oil, Sourdough", tag: "Plant-forward · High fiber", cal: 480, protein: 22, carb: 68, fat: 16, img: "", placeholder: true },
 ];
 
 const FILTERS = ["All", "High Protein", "Endurance", "Plant-Forward", "Recovery"];
@@ -77,7 +78,7 @@ export function MealKitsView({ meals }: { meals: MealCard[] | null }) {
                 onMouseLeave={e => { const img = e.currentTarget.querySelector("img") as HTMLElement; if (img) img.style.transform = "scale(1)"; }}
               >
                 <div style={{ aspectRatio: "3/4", position: "relative", overflow: "hidden" }}>
-                  {meal.img && <img src={meal.img} alt={meal.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.62, transition: "transform 0.6s ease" }} />}
+                  <BrandImage src={meal.img} alt={meal.name} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover", opacity: 0.62, transition: "transform 0.6s ease" }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(12,14,16,1) 0%, transparent 58%)" }} />
                 </div>
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "36px" }}>

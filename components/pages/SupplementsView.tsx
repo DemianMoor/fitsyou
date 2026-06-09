@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FitMark } from "@/components/FitMark";
+import { BrandImage } from "@/components/BrandImage";
 import { ArrowRight } from "lucide-react";
 
 const BRASS = "#B79256", OBSIDIAN = "#101114", BONE = "#F5F2EB", ASH = "#6B6A66", PINE = "#2F3A30";
@@ -50,7 +51,9 @@ export function SupplementsView({ products }: { products: SupplementCard[] | nul
           <div>
             <FitMark size={28} padded={false}>
               <div style={{ padding: 20 }}>
-                <img src="https://images.unsplash.com/photo-1585830812369-b88fce3bee22?w=700&h=700&fit=crop&auto=format" alt="Supplement capsules on dark surface — clinical and clean" style={{ width: "100%", aspectRatio: "1/1", objectFit: "cover", borderRadius: 6, display: "block", opacity: 0.75 }} />
+                <div style={{ position: "relative", aspectRatio: "1/1", overflow: "hidden", borderRadius: 6 }}>
+                  <BrandImage src="/images/supplements/hero.jpg" alt="Supplement capsules on dark surface — clinical and clean" fill sizes="(max-width: 900px) 100vw, 45vw" style={{ objectFit: "cover", opacity: 0.75 }} />
+                </div>
               </div>
             </FitMark>
           </div>
@@ -78,8 +81,8 @@ export function SupplementsView({ products }: { products: SupplementCard[] | nul
               {products!.map((p, i) => (
                 <div key={p.name} style={{ background: i % 2 === 0 ? "#141719" : "#161B1C", padding: "44px", display: "flex", gap: 24 }}>
                   {p.img && (
-                    <div style={{ width: 96, height: 96, flexShrink: 0, overflow: "hidden", borderRadius: 4 }}>
-                      <img src={p.img} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    <div style={{ width: 96, height: 96, flexShrink: 0, overflow: "hidden", borderRadius: 4, position: "relative" }}>
+                      <BrandImage src={p.img} alt={p.name} fill sizes="96px" style={{ objectFit: "cover" }} />
                     </div>
                   )}
                   <div>

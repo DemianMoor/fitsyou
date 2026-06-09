@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FitMark } from "@/components/FitMark";
+import { BrandImage } from "@/components/BrandImage";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
 const BRASS = "#B79256";
@@ -97,14 +98,16 @@ export default function HomePage() {
 
           <div style={{ opacity: vis ? 1 : 0, transform: vis ? "none" : "translateX(32px)", transition: "opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s" }}>
             <FitMark size={32} padded={false}>
-              <div style={{ aspectRatio: "4/5", overflow: "hidden", borderRadius: 8, position: "relative", padding: 14 }}>
-                <img
-                  src="https://images.unsplash.com/photo-1663530761401-15eefb544889?w=800&h=1000&fit=crop&auto=format"
-                  alt="Chef pouring sauce over a precisely plated steak — editorial food photography"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 6, display: "block" }}
-                />
-                <div style={{ position: "absolute", bottom: 26, left: 26, background: "rgba(16,17,20,0.82)", padding: "10px 16px", borderRadius: 2, borderLeft: `2px solid ${BRASS}` }}>
-                  <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: BRASS }}>Placeholder — real photography coming</span>
+              <div style={{ padding: 14 }}>
+                <div style={{ aspectRatio: "4/5", overflow: "hidden", borderRadius: 6, position: "relative" }}>
+                  <BrandImage
+                    src="/images/home/hero-portrait.jpg"
+                    alt="Chef pouring sauce over a precisely plated steak — editorial food photography"
+                    fill
+                    priority
+                    sizes="(max-width: 900px) 100vw, 45vw"
+                    style={{ objectFit: "cover" }}
+                  />
                 </div>
               </div>
             </FitMark>
@@ -164,7 +167,7 @@ export default function HomePage() {
       {/* ── FULL-BLEED FOOD SHOT ── */}
       <section style={{ position: "relative", overflow: "hidden" }}>
         <div style={{ aspectRatio: "21/8", position: "relative" }}>
-          <img src="https://images.unsplash.com/photo-1750943082231-0d84cfabc4dd?w=1600&h=600&fit=crop&auto=format" alt="Beautifully plated dish — fine dining editorial" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          <BrandImage src="/images/home/editorial-band.jpg" alt="Beautifully plated dish — fine dining editorial" fill sizes="100vw" style={{ objectFit: "cover" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(16,17,20,0.75) 0%, rgba(16,17,20,0.1) 65%)" }} />
           <div style={{ position: "absolute", top: "50%", left: 80, transform: "translateY(-50%)" }}>
             <FitMark size={22} padded={false}>
@@ -190,15 +193,15 @@ export default function HomePage() {
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
             {[
-              { path: "/meal-kits", tag: "01", label: "Meal Kits", desc: "Weekly boxes matched to your macros and palate. Every recipe built for your goals — fueled, not filled.", img: "https://images.unsplash.com/photo-1590394072807-12f9869e3907?w=600&h=800&fit=crop&auto=format", alt: "Dark bowl with spoon — editorial food photography" },
-              { path: "/supplements", tag: "02", label: "Supplements", desc: "A personalized stack — not a generic multivitamin. Formulated around your intake gaps and performance targets.", img: "https://images.unsplash.com/photo-1585830812369-b88fce3bee22?w=600&h=800&fit=crop&auto=format", alt: "Supplement capsules on dark surface" },
-              { path: "/training", tag: "03", label: "Training", desc: "Movement programming built around your schedule, equipment, and output goals. Synced with your nutrition.", img: "https://images.unsplash.com/photo-1590556409324-aa1d726e5c3c?w=600&h=800&fit=crop&auto=format", alt: "Athlete training with kettlebell" },
+              { path: "/meal-kits", tag: "01", label: "Meal Kits", desc: "Weekly boxes matched to your macros and palate. Every recipe built for your goals — fueled, not filled.", img: "/images/home/meal-kits.jpg", alt: "Dark bowl with spoon — editorial food photography" },
+              { path: "/supplements", tag: "02", label: "Supplements", desc: "A personalized stack — not a generic multivitamin. Formulated around your intake gaps and performance targets.", img: "/images/home/supplements.jpg", alt: "Supplement capsules on dark surface" },
+              { path: "/training", tag: "03", label: "Training", desc: "Movement programming built around your schedule, equipment, and output goals. Synced with your nutrition.", img: "/images/home/training.jpg", alt: "Athlete training with kettlebell" },
             ].map(card => (
               <div key={card.path} onClick={() => go(card.path)} style={{ cursor: "pointer", position: "relative", overflow: "hidden", background: OBSIDIAN, aspectRatio: "3/4" }}
                 onMouseEnter={e => { const img = e.currentTarget.querySelector("img") as HTMLElement; if (img) img.style.transform = "scale(1.05)"; }}
                 onMouseLeave={e => { const img = e.currentTarget.querySelector("img") as HTMLElement; if (img) img.style.transform = "scale(1)"; }}
               >
-                <img src={card.img} alt={card.alt} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.55, transition: "transform 0.55s ease" }} />
+                <BrandImage src={card.img} alt={card.alt} fill sizes="(max-width: 900px) 100vw, 33vw" style={{ objectFit: "cover", opacity: 0.55, transition: "transform 0.55s ease" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(16,17,20,0.95) 0%, transparent 55%)" }} />
                 <div style={{ position: "absolute", bottom: 32, left: 32, right: 32 }}>
                   <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS }}>{card.tag}</span>

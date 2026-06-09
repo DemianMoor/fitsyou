@@ -200,6 +200,37 @@ export async function getFeatureFlags(): Promise<FeatureFlags> {
   }
 }
 
+// ── Analytics IDs ────────────────────────────────────────────────────────────
+// Per-brand public client IDs live in the brand's own site_settings
+// (MASTER-SPEC §7) — safe to expose, no encryption. Absent → render nothing.
+export type Analytics = {
+  ga4: string | null;
+  gtm: string | null;
+  clarity: string | null;
+};
+
+export async function getAnalytics(): Promise<Analytics> {
+  const empty: Analytics = { ga4: null, gtm: null, clarity: null };
+  if (!hasSupabaseEnv()) return empty;
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("site_settings")
+      .select("key,value")
+      .in("key", ["analytics_ga4_id", "analytics_gtm_id", "analytics_clarity_id"]);
+    if (error) throw error;
+    const map = new Map((data ?? []).map((r) => [r.key, r.value]));
+    const str = (v: unknown) => (typeof v === "string" && v.trim() ? v.trim() : null);
+    return {
+      ga4: str(map.get("analytics_ga4_id")),
+      gtm: str(map.get("analytics_gtm_id")),
+      clarity: str(map.get("analytics_clarity_id")),
+    };
+  } catch {
+    return empty;
+  }
+}
+
 /** Format an ISO timestamp as e.g. "Nov 12, 2024" (empty string if null). */
 export function formatDate(iso: string | null): string {
   if (!iso) return "";

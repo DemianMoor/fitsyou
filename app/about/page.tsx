@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FitMark } from "@/components/FitMark";
+import { BrandImage } from "@/components/BrandImage";
 import { ArrowRight } from "lucide-react";
 
 const BRASS = "#B79256", OBSIDIAN = "#101114", BONE = "#F5F2EB", ASH = "#6B6A66", PINE = "#2F3A30", EMBER = "#D9603B";
@@ -35,11 +36,15 @@ export default function AboutPage() {
           <div>
             <FitMark size={28} padded={false}>
               <div style={{ padding: 16 }}>
-                <img
-                  src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=700&h=600&fit=crop&auto=format"
-                  alt="Team working together — natural light"
-                  style={{ width: "100%", aspectRatio: "7/6", objectFit: "cover", borderRadius: 6, display: "block", opacity: 0.78 }}
-                />
+                <div style={{ position: "relative", aspectRatio: "7/6", overflow: "hidden", borderRadius: 6 }}>
+                  <BrandImage
+                    src="/images/about/team.jpg"
+                    alt="The Fits You team working together — natural light"
+                    fill
+                    sizes="(max-width: 900px) 100vw, 45vw"
+                    style={{ objectFit: "cover", opacity: 0.78 }}
+                  />
+                </div>
               </div>
             </FitMark>
           </div>

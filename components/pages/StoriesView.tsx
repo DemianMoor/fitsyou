@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { FitMark } from "@/components/FitMark";
+import { BrandImage } from "@/components/BrandImage";
 import { ArrowRight } from "lucide-react";
 
 const BRASS = "#B79256", OBSIDIAN = "#101114", BONE = "#F5F2EB";
@@ -19,10 +20,10 @@ export type Story = {
 // stories (published `articles` with pillar='stories') exist. NEVER presented
 // as real customers or real results.
 const SAMPLE_STORIES = [
-  { initials: "M.T.", age: "38", title: "I started cooking again.", quote: "I hadn't cooked a real meal in two years. Fits You showed me what actually worked for my body — and made it easy to act on. The recipes weren't just nutritious. They were something I wanted to eat.", duration: "6 months on the plan", img: "https://images.unsplash.com/photo-1470468969717-61d5d54fd036?w=600&h=700&fit=crop&auto=format" },
-  { initials: "D.A.", age: "44", title: "Strength I didn't expect.", quote: "The training and nutrition worked together in a way I hadn't experienced. Three months in, I was hitting personal bests I'd been chasing for two years. Results vary — I know that. This was mine.", duration: "5 months on the plan", img: "https://images.unsplash.com/photo-1434596922112-19c563067271?w=600&h=700&fit=crop&auto=format" },
-  { initials: "R.M.", age: "51", title: "Energy I'd forgotten about.", quote: "I'd accepted that I'd be tired. It turned out I wasn't eating for my body at all. The supplement stack filled gaps I didn't know I had. Six weeks in, I noticed the difference.", duration: "4 months on the plan", img: "https://images.unsplash.com/photo-1590556409324-aa1d726e5c3c?w=600&h=700&fit=crop&auto=format" },
-  { initials: "S.K.", age: "33", title: "The plan adapted with me.", quote: "When I told the system I was training for a half marathon, my meal plan changed within a week. The carb timing was different. The portion sizes shifted. It felt like it was watching.", duration: "8 months on the plan", img: "https://images.unsplash.com/photo-1607962252666-2c33af3c6ba6?w=600&h=700&fit=crop&auto=format" },
+  { initials: "M.T.", age: "38", title: "I started cooking again.", quote: "I hadn't cooked a real meal in two years. Fits You showed me what actually worked for my body — and made it easy to act on. The recipes weren't just nutritious. They were something I wanted to eat.", duration: "6 months on the plan", img: "" },
+  { initials: "D.A.", age: "44", title: "Strength I didn't expect.", quote: "The training and nutrition worked together in a way I hadn't experienced. Three months in, I was hitting personal bests I'd been chasing for two years. Results vary — I know that. This was mine.", duration: "5 months on the plan", img: "" },
+  { initials: "R.M.", age: "51", title: "Energy I'd forgotten about.", quote: "I'd accepted that I'd be tired. It turned out I wasn't eating for my body at all. The supplement stack filled gaps I didn't know I had. Six weeks in, I noticed the difference.", duration: "4 months on the plan", img: "" },
+  { initials: "S.K.", age: "33", title: "The plan adapted with me.", quote: "When I told the system I was training for a half marathon, my meal plan changed within a week. The carb timing was different. The portion sizes shifted. It felt like it was watching.", duration: "8 months on the plan", img: "" },
 ];
 
 export function StoriesView({ stories }: { stories: Story[] | null }) {
@@ -74,7 +75,7 @@ export function StoriesView({ stories }: { stories: Story[] | null }) {
                   <div key={s.key} style={{ background: i % 2 === 0 ? "#141719" : "#161B1C" }}>
                     {s.img && (
                       <div style={{ aspectRatio: "4/3", overflow: "hidden", position: "relative" }}>
-                        <img src={s.img} alt={s.imageAlt} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                        <BrandImage src={s.img} alt={s.imageAlt} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover" }} />
                         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 45%, rgba(20,23,25,0.85) 100%)" }} />
                       </div>
                     )}
@@ -99,7 +100,7 @@ export function StoriesView({ stories }: { stories: Story[] | null }) {
               : SAMPLE_STORIES.map((s, i) => (
                   <div key={s.initials} style={{ background: i % 2 === 0 ? "#141719" : "#161B1C" }}>
                     <div style={{ aspectRatio: "4/3", overflow: "hidden", position: "relative" }}>
-                      <img src={s.img} alt={`${s.title} — SAMPLE, not a real customer`} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.5 }} />
+                      <BrandImage src={s.img} alt={`${s.title} — SAMPLE, not a real customer`} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover", opacity: 0.5 }} placeholderLabel="Sample" />
                       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(20,23,25,0.95) 100%)" }} />
                       <div style={{ position: "absolute", bottom: 24, left: 24, background: "rgba(16,17,20,0.8)", padding: "6px 12px", borderRadius: 2, borderLeft: `2px solid ${BRASS}` }}>
                         <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: BRASS }}>SAMPLE — not a real customer</span>

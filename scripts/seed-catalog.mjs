@@ -19,6 +19,13 @@ const db = createClient(url, key, { auth: { autoRefreshToken: false, persistSess
 const now = new Date().toISOString();
 const pub = (extra) => ({ status: "published", published_at: now, ...extra });
 
+// Catalog images live in the Fits You "catalog" storage bucket. The URL is set
+// here so the public pages reference it; upload the actual files to these paths
+// (BrandImage shows a brand placeholder until each file exists).
+const BUCKET = "catalog";
+const imageUrl = (type, slug) =>
+  `${url.replace(/\/$/, "")}/storage/v1/object/public/${BUCKET}/${type}/${slug}.jpg`;
+
 const mealKits = [
   { slug: "seared-salmon-miso-greens", name: "Seared Salmon, Miso Braised Greens", tagline: "High protein · Omega-rich", dietary_tags: ["high-protein", "pescatarian"], nutrition: { calories: 520, protein_g: 46, carbs_g: 28, fat_g: 24 }, sort_order: 1 },
   { slug: "grass-fed-sirloin-root-veg", name: "Grass-Fed Sirloin, Roasted Root Veg", tagline: "Strength recovery · Iron-forward", dietary_tags: ["high-protein"], nutrition: { calories: 640, protein_g: 52, carbs_g: 38, fat_g: 22 }, sort_order: 2 },
@@ -40,13 +47,16 @@ const trainingPlans = [
   { slug: "mobility-continuous", name: "Mobility", focus: "mobility", level: "All levels", weeks: 4, sessions_per_week: 4, equipment: ["mat", "bands"], description: "Structured mobility and movement-quality work — complements any other training type or stands alone.", sort_order: 4 },
 ];
 
-async function upsert(table, rows) {
-  const { error } = await db.from(table).upsert(rows.map(pub), { onConflict: "slug" });
+async function upsert(table, type, rows) {
+  const withImages = rows.map((r) =>
+    pub({ ...r, image_url: imageUrl(type, r.slug), image_alt: r.name }),
+  );
+  const { error } = await db.from(table).upsert(withImages, { onConflict: "slug" });
   if (error) { console.error(`${table}:`, error.message); process.exit(1); }
   console.log(`✓ ${table}: ${rows.length} rows`);
 }
 
-await upsert("meal_kits", mealKits);
-await upsert("supplements", supplements);
-await upsert("training_plans", trainingPlans);
+await upsert("meal_kits", "meal-kits", mealKits);
+await upsert("supplements", "supplements", supplements);
+await upsert("training_plans", "training", trainingPlans);
 console.log("Seed complete.");
