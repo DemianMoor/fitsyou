@@ -27,3 +27,6 @@ next-env.d.ts
 /mobile-audit
 /.playwright-mcp
 
+
+# dev server log
+dev.log
