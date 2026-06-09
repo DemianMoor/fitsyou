@@ -67,7 +67,7 @@ export default function PricingPage() {
       {/* Plans */}
       <section style={{ background: BONE, padding: "96px 32px" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
             {PLANS.map(plan => (
               <div
                 key={plan.name}

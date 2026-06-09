@@ -46,7 +46,7 @@ export function Nav({ dark = false }: NavProps) {
           <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", color: "#B79256", textTransform: "uppercase" }}>®</span>
         </button>
 
-        <div style={{ display: "flex", gap: 28, alignItems: "center" }} className="hidden md:flex">
+        <div style={{ gap: 28, alignItems: "center" }} className="hidden md:flex">
           {links.map(l => {
             const active = pathname === l.path;
             return (
@@ -69,7 +69,7 @@ export function Nav({ dark = false }: NavProps) {
           </button>
         </div>
 
-        <button className="flex md:hidden" onClick={() => setOpen(!open)} style={{ ...btnBase, color: fg, padding: 4 }}>
+        <button className="flex md:hidden" aria-label="Menu" onClick={() => setOpen(!open)} style={{ ...btnBase, color: fg, padding: 11 }}>
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
@@ -77,7 +77,7 @@ export function Nav({ dark = false }: NavProps) {
       {open && (
         <div className="md:hidden" style={{ background: bg, borderTop: `1px solid ${bd}`, padding: "24px 32px", display: "flex", flexDirection: "column", gap: 20 }}>
           {links.map(l => (
-            <button key={l.path} onClick={() => go(l.path)} style={{ ...btnBase, fontSize: 15, fontWeight: 500, color: pathname === l.path ? "#D9603B" : fg, textAlign: "left" }}>
+            <button key={l.path} onClick={() => go(l.path)} style={{ ...btnBase, fontSize: 15, fontWeight: 500, color: pathname === l.path ? "#D9603B" : fg, textAlign: "left", padding: "11px 0" }}>
               {l.label}
             </button>
           ))}

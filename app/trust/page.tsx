@@ -93,7 +93,7 @@ export default function TrustFAQPage() {
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS }}>Our commitments</span>
           <h2 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 44, fontWeight: 400, color: OBSIDIAN, letterSpacing: "-0.025em", margin: "14px 0 56px", lineHeight: 1.05 }}>How we operate.</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
             {[
               { label: "No dark patterns", desc: "Cancel from your account in under two minutes. No phone calls, no retention scripts, no friction." },
               { label: "Honest copy", desc: "We don't promise specific results. We don't use before-and-after imagery without clear labeling. We don't shame anyone into buying." },

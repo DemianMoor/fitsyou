@@ -61,7 +61,7 @@ export function BlogView({ posts }: { posts: BlogPost[] | null }) {
         /* Featured post */
         <section style={{ background: BONE }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 480 }}>
+            <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 480 }}>
               <div style={{ overflow: "hidden", position: "relative", minHeight: 320 }}>
                 <BrandImage src={featured.img} alt={featured.title} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "cover" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent, rgba(245,242,235,0.08))" }} />
@@ -107,7 +107,7 @@ export function BlogView({ posts }: { posts: BlogPost[] | null }) {
             ))}
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {rest.map(post => (
               <div
                 key={post.slug}

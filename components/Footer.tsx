@@ -32,7 +32,7 @@ export function Footer() {
   return (
     <footer style={{ background: "#101114", borderTop: "1px solid rgba(183,146,86,0.18)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "72px 32px 40px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 64 }}>
+        <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 64 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
               <span style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 22, fontWeight: 600, color: "#F5F2EB" }}>Fits You</span>

@@ -73,7 +73,7 @@ export default function HomePage() {
       <section style={{ background: OBSIDIAN, minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden", paddingTop: 64 }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "rgba(183,146,86,0.35)" }} />
 
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "80px 32px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center", width: "100%", opacity: vis ? 1 : 0, transform: vis ? "none" : "translateY(28px)", transition: "opacity 0.85s ease, transform 0.85s ease" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", padding: "80px 32px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center", width: "100%", opacity: vis ? 1 : 0, transform: vis ? "none" : "translateY(28px)", transition: "opacity 0.85s ease, transform 0.85s ease" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
             <div>
               <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: BRASS }}>Measured. Made for one.</span>
@@ -134,7 +134,7 @@ export default function HomePage() {
 
       {/* ── THE IDEA ── */}
       <section style={{ background: BONE, padding: "128px 32px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "center" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "center" }}>
           <div>
             <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS }}>The concept</span>
             <h2 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: "clamp(36px, 4vw, 56px)", fontWeight: 400, color: OBSIDIAN, letterSpacing: "-0.025em", lineHeight: 1.08, margin: "16px 0 28px" }}>
@@ -191,7 +191,7 @@ export default function HomePage() {
             <GhostBtn label="Start your intake" onClick={() => go("/plan")} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
             {[
               { path: "/meal-kits", tag: "01", label: "Meal Kits", desc: "Weekly boxes matched to your macros and palate. Every recipe built for your goals — fueled, not filled.", img: "/images/home/meal-kits.jpg", alt: "Dark bowl with spoon — editorial food photography" },
               { path: "/supplements", tag: "02", label: "Supplements", desc: "A personalized stack — not a generic multivitamin. Formulated around your intake gaps and performance targets.", img: "/images/home/supplements.jpg", alt: "Supplement capsules on dark surface" },
@@ -226,7 +226,7 @@ export default function HomePage() {
             <button onClick={() => go("/stories")} style={{ background: "none", border: "1px solid rgba(245,242,235,0.2)", color: "rgba(245,242,235,0.6)", cursor: "pointer", fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", padding: "12px 22px", borderRadius: 4, transition: "all 0.15s" }} onMouseEnter={e => { e.currentTarget.style.color = BONE; e.currentTarget.style.borderColor = "rgba(245,242,235,0.45)"; }} onMouseLeave={e => { e.currentTarget.style.color = "rgba(245,242,235,0.6)"; e.currentTarget.style.borderColor = "rgba(245,242,235,0.2)"; }}>All stories</button>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {[
               { name: "M.T., 38", title: "I started cooking again.", quote: "I hadn't cooked a real meal in two years. Fits You showed me what worked for my body — and made it easy to act on." },
               { name: "D.A., 44", title: "Strength I didn't expect.", quote: "The training and nutrition worked together in a way I hadn't found before. Three months in, I was hitting numbers I'd been chasing for years." },

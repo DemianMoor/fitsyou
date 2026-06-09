@@ -1,0 +1,74 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - button "Fits You ®" [ref=e5] [cursor=pointer]:
+          - generic [ref=e6]: Fits You
+          - generic [ref=e7]: ®
+        - button "Menu" [active] [ref=e8] [cursor=pointer]:
+          - img [ref=e81]
+      - generic [ref=e84]:
+        - button "How It Fits" [ref=e85] [cursor=pointer]
+        - button "Meal Kits" [ref=e86] [cursor=pointer]
+        - button "Supplements" [ref=e87] [cursor=pointer]
+        - button "Training" [ref=e88] [cursor=pointer]
+        - button "Pricing" [ref=e89] [cursor=pointer]
+        - button "About" [ref=e90] [cursor=pointer]
+        - button "Build Your Plan" [ref=e91] [cursor=pointer]
+    - main [ref=e10]:
+      - generic [ref=e12]:
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - generic [ref=e17]: "1"
+            - generic [ref=e18]: Body
+          - generic [ref=e19]:
+            - generic [ref=e21]: "2"
+            - generic [ref=e22]: Goals
+          - generic [ref=e23]:
+            - generic [ref=e25]: "3"
+            - generic [ref=e26]: Food
+          - generic [ref=e27]:
+            - generic [ref=e29]: "4"
+            - generic [ref=e30]: Training
+          - generic [ref=e31]:
+            - generic [ref=e33]: "5"
+            - generic [ref=e34]: Your Plan
+        - generic [ref=e36]:
+          - generic [ref=e37]:
+            - generic [ref=e38]: Step 01
+            - heading "Tell us about your body." [level=2] [ref=e39]:
+              - text: Tell us about
+              - emphasis [ref=e40]: your body.
+            - paragraph [ref=e41]: These measurements shape everything that follows.
+          - generic [ref=e42]:
+            - generic [ref=e43]:
+              - generic [ref=e44]:
+                - generic [ref=e45]: Age
+                - spinbutton [ref=e46]
+              - generic [ref=e47]:
+                - generic [ref=e48]: Weight (lbs)
+                - spinbutton [ref=e49]
+            - generic [ref=e50]:
+              - generic [ref=e51]:
+                - generic [ref=e52]: Height
+                - generic [ref=e53]:
+                  - spinbutton [ref=e54]
+                  - spinbutton [ref=e55]
+              - generic [ref=e56]:
+                - generic [ref=e57]: Biological sex
+                - combobox [ref=e58] [cursor=pointer]:
+                  - option "Select" [selected]
+                  - option "Male"
+                  - option "Female"
+                  - option "Prefer not to say"
+        - button "Continue" [disabled] [ref=e60]:
+          - text: Continue
+          - img [ref=e61]
+  - button "Open Next.js Dev Tools" [ref=e72] [cursor=pointer]:
+    - generic [ref=e93]:
+      - text: Compiling
+      - generic [ref=e94]:
+        - generic [ref=e95]: .
+        - generic [ref=e96]: .
+        - generic [ref=e97]: .
+  - alert [ref=e80]

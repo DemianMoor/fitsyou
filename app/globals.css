@@ -109,3 +109,14 @@
   button { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
   input { font-size: var(--text-base); font-weight: var(--font-weight-normal); line-height: 1.5; }
 }
+
+/* Mobile responsiveness for the inline-styled layout (ported Make export).
+   Phone widths stack multi-column inline grids to one column; the 768px tablet
+   boundary keeps the desktop columns. !important overrides the inline
+   grid-template-columns. */
+@media (max-width: 767px) {
+  .fy-stack {
+    grid-template-columns: 1fr !important;
+  }
+}
+

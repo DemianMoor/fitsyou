@@ -138,14 +138,14 @@ export default function PlanBuilderPage() {
           <div>
             {stepHead("01", <>Tell us about<br /><em style={{ fontStyle: "italic", color: BRASS }}>your body.</em></>, "These measurements shape everything that follows.")}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                 <div><label style={labelSt}>Age</label><input type="number" placeholder="35" value={form.age} onChange={e => setForm(f => ({ ...f, age: e.target.value }))} style={inputSt} /></div>
                 <div><label style={labelSt}>Weight (lbs)</label><input type="number" placeholder="175" value={form.weight} onChange={e => setForm(f => ({ ...f, weight: e.target.value }))} style={inputSt} /></div>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
+              <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
                 <div style={{ gridColumn: "1/3" }}>
                   <label style={labelSt}>Height</label>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                     <input type="number" placeholder="5 ft" value={form.heightFt} onChange={e => setForm(f => ({ ...f, heightFt: e.target.value }))} style={inputSt} />
                     <input type="number" placeholder="10 in" value={form.heightIn} onChange={e => setForm(f => ({ ...f, heightIn: e.target.value }))} style={inputSt} />
                   </div>
@@ -168,7 +168,7 @@ export default function PlanBuilderPage() {
         {step === 1 && (
           <div>
             {stepHead("02", <>What are you<br /><em style={{ fontStyle: "italic", color: BRASS }}>working toward?</em></>, "Choose up to three. Honest answers produce the best plan.")}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
               {GOALS.map(g => {
                 const sel = form.goals.includes(g);
                 return (
@@ -188,7 +188,7 @@ export default function PlanBuilderPage() {
         {step === 2 && (
           <div>
             {stepHead("03", <>How do you<br /><em style={{ fontStyle: "italic", color: BRASS }}>eat?</em></>, "Your dietary framework shapes every recipe.")}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 24 }}>
+            <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 24 }}>
               {FOOD_PREFS.map(p => optBtn(p, form.diet === p, () => setForm(f => ({ ...f, diet: p })), { padding: "18px 22px", textAlign: "left" as const }))}
             </div>
             <div>
@@ -204,7 +204,7 @@ export default function PlanBuilderPage() {
             {stepHead("04", <>How do you<br /><em style={{ fontStyle: "italic", color: BRASS }}>move?</em></>, "Training frequency directly affects your caloric and macro targets.")}
             <div style={{ marginBottom: 28 }}>
               <label style={labelSt}>Sessions per week</label>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 8 }}>
+              <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 8 }}>
                 {FREQS.map(tf => {
                   const sel = form.freq === tf.l;
                   return (
@@ -243,7 +243,7 @@ export default function PlanBuilderPage() {
                 </h2>
                 {/* Input-reflective plan shape — NO calorie/macro/weight targets (those
                     are set by the dietitian team post-join). Personalized from real answers. */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 28 }}>
+                <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 28 }}>
                   {[
                     { v: form.goals[0] ?? "Balanced approach", k: "Primary focus" },
                     { v: form.diet || "No restrictions", k: "Food framework" },

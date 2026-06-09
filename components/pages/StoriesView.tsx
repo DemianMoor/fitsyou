@@ -69,7 +69,7 @@ export function StoriesView({ stories }: { stories: Story[] | null }) {
       {/* Stories grid */}
       <section style={{ background: OBSIDIAN, padding: "2px 0" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {hasReal
               ? stories!.map((s, i) => (
                   <div key={s.key} style={{ background: i % 2 === 0 ? "#141719" : "#161B1C" }}>

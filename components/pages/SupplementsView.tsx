@@ -35,7 +35,7 @@ export function SupplementsView({ products }: { products: SupplementCard[] | nul
     <div style={{ paddingTop: 64 }}>
       {/* Header */}
       <section style={{ background: OBSIDIAN, padding: "96px 32px 80px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
           <div>
             <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BRASS }}>Supplements</span>
             <h1 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: "clamp(44px, 5vw, 76px)", fontWeight: 400, color: BONE, letterSpacing: "-0.03em", margin: "16px 0 24px", lineHeight: 0.97 }}>
@@ -77,7 +77,7 @@ export function SupplementsView({ products }: { products: SupplementCard[] | nul
               <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BRASS }}>Available now</span>
               <h2 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 40, fontWeight: 400, color: BONE, letterSpacing: "-0.025em", margin: "14px 0 0", lineHeight: 1.05 }}>The catalog.</h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+            <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
               {products!.map((p, i) => (
                 <div key={p.name} style={{ background: i % 2 === 0 ? "#141719" : "#161B1C", padding: "44px", display: "flex", gap: 24 }}>
                   {p.img && (
@@ -116,7 +116,7 @@ export function SupplementsView({ products }: { products: SupplementCard[] | nul
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {STACK.map((layer, i) => (
               <div key={layer.name} style={{ background: i % 2 === 0 ? "#141719" : "#161B1C", padding: "48px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28 }}>
@@ -145,7 +145,7 @@ export function SupplementsView({ products }: { products: SupplementCard[] | nul
 
       {/* How it's formulated */}
       <section style={{ background: BONE, padding: "128px 32px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "center" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "center" }}>
           <div>
             <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS }}>The process</span>
             <h2 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 48, fontWeight: 400, color: OBSIDIAN, letterSpacing: "-0.025em", margin: "16px 0 24px", lineHeight: 1.05 }}>

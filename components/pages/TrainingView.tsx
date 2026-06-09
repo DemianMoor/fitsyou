@@ -32,7 +32,7 @@ export function TrainingView({ protocols }: { protocols: Protocol[] | null }) {
     <div style={{ paddingTop: 64 }}>
       {/* Header */}
       <section style={{ background: OBSIDIAN, padding: "96px 32px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
           <div>
             <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BRASS }}>Training</span>
             <h1 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: "clamp(44px, 5vw, 76px)", fontWeight: 400, color: BONE, letterSpacing: "-0.03em", margin: "16px 0 24px", lineHeight: 0.97 }}>
@@ -70,7 +70,7 @@ export function TrainingView({ protocols }: { protocols: Protocol[] | null }) {
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {list.map((p, i) => (
               <div key={p.name} style={{ background: i % 2 === 0 ? OBSIDIAN : PINE, padding: "52px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
@@ -98,7 +98,7 @@ export function TrainingView({ protocols }: { protocols: Protocol[] | null }) {
 
       {/* Sync section */}
       <section style={{ background: OBSIDIAN, padding: "96px 32px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "center" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "center" }}>
           <div>
             <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS }}>The sync</span>
             <h2 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 48, fontWeight: 400, color: BONE, letterSpacing: "-0.025em", margin: "16px 0 24px", lineHeight: 1.05 }}>

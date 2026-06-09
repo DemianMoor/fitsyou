@@ -23,7 +23,7 @@ export default function AboutPage() {
     <div style={{ paddingTop: 64 }}>
       {/* Header */}
       <section style={{ background: OBSIDIAN, padding: "96px 32px 80px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           <div>
             <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BRASS }}>About</span>
             <h1 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: "clamp(44px, 5.5vw, 80px)", fontWeight: 400, color: BONE, letterSpacing: "-0.03em", margin: "16px 0 24px", lineHeight: 0.97 }}>
@@ -53,7 +53,7 @@ export default function AboutPage() {
 
       {/* Mission */}
       <section style={{ background: BONE, padding: "128px 32px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 96, alignItems: "start" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 96, alignItems: "start" }}>
           <div>
             <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS }}>Mission</span>
             <div style={{ width: 32, height: 1, background: "rgba(183,146,86,0.4)", marginTop: 12 }} />
@@ -75,7 +75,7 @@ export default function AboutPage() {
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS }}>How we operate</span>
           <h2 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 44, fontWeight: 400, color: BONE, letterSpacing: "-0.025em", margin: "14px 0 56px", lineHeight: 1.05 }}>Four commitments.</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {[
               { n: "01", label: "Precision over simplicity", desc: "We don't round down to make the numbers easier. Every plan reflects the actual complexity of your biology and goals." },
               { n: "02", label: "Honesty about outcomes", desc: "Results vary. We say that everywhere it matters, and we mean it. No implied guarantees, no before-and-after theatre." },
@@ -99,7 +99,7 @@ export default function AboutPage() {
           <h2 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 44, fontWeight: 400, color: OBSIDIAN, letterSpacing: "-0.025em", margin: "14px 0 56px", lineHeight: 1.05 }}>
             Built by people who<br /><em style={{ fontStyle: "italic", color: ASH }}>felt the gap.</em>
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {team.map((member, i) => (
               <div key={member.name} style={{ background: i % 2 === 0 ? OBSIDIAN : "#1A1E22", padding: "48px" }}>
                 <div style={{ marginBottom: 20 }}>

@@ -39,7 +39,7 @@ export function MealKitsView({ meals }: { meals: MealCard[] | null }) {
     <div style={{ paddingTop: 64 }}>
       {/* Header */}
       <section style={{ background: OBSIDIAN, padding: "96px 32px 64px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "flex-end" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "flex-end" }}>
           <div>
             <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: BRASS }}>Meal kits</span>
             <h1 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: "clamp(44px, 5vw, 76px)", fontWeight: 400, color: BONE, letterSpacing: "-0.03em", margin: "16px 0 0", lineHeight: 0.97 }}>
@@ -71,7 +71,7 @@ export function MealKitsView({ meals }: { meals: MealCard[] | null }) {
       {/* Meal grid */}
       <section style={{ background: OBSIDIAN }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
             {list.map(meal => (
               <div key={meal.name} style={{ position: "relative", overflow: "hidden", cursor: "pointer", background: "#0C0E10" }}
                 onMouseEnter={e => { const img = e.currentTarget.querySelector("img") as HTMLElement; if (img) img.style.transform = "scale(1.04)"; }}
@@ -110,7 +110,7 @@ export function MealKitsView({ meals }: { meals: MealCard[] | null }) {
 
       {/* How kits work */}
       <section style={{ background: BONE, padding: "128px 32px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "center" }}>
+        <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "center" }}>
           <div>
             <span style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS }}>How it works</span>
             <h2 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 48, fontWeight: 400, color: OBSIDIAN, letterSpacing: "-0.025em", margin: "16px 0 24px", lineHeight: 1.05 }}>

@@ -44,7 +44,7 @@ export default function HowItFitsPage() {
       {/* Flow diagram */}
       <section style={{ background: BONE, padding: "80px 32px" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 2 }}>
+          <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 2 }}>
             {steps.map((s, i) => (
               <div key={s.num} style={{ background: i % 2 === 0 ? OBSIDIAN : PINE, padding: "48px 36px", position: "relative" }}>
                 <span style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 64, fontWeight: 300, color: BRASS, opacity: 0.25, lineHeight: 1, display: "block", marginBottom: 16 }}>{s.num}</span>
@@ -64,7 +64,7 @@ export default function HowItFitsPage() {
       {/* Steps deep-dive */}
       {steps.map((step, i) => (
         <section key={step.num} style={{ background: step.bg }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 32px", display: "grid", gridTemplateColumns: i % 2 === 0 ? "1fr 1fr" : "1fr 1fr", gap: 80, alignItems: "center" }}>
+          <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 32px", display: "grid", gridTemplateColumns: i % 2 === 0 ? "1fr 1fr" : "1fr 1fr", gap: 80, alignItems: "center" }}>
             <div style={{ order: i % 2 === 0 ? 1 : 2 }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 28 }}>
                 <span style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 72, fontWeight: 300, color: BRASS, lineHeight: 1, opacity: 0.35 }}>{step.num}</span>
