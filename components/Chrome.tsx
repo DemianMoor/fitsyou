@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { SubscribePopup } from "@/components/SubscribePopup";
 
 // Ports Root.tsx: /plan gets a dark nav and no footer.
 const DARK_NAV_PATHS = ["/plan"];
@@ -19,6 +20,7 @@ export function Chrome({ children }: { children: React.ReactNode }) {
       <Nav dark={isDark} />
       <main>{children}</main>
       {showFooter && <Footer />}
+      <SubscribePopup />
     </div>
   );
 }
