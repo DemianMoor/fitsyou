@@ -52,8 +52,22 @@ export default async function ArticlePage({
     );
   }
 
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt ?? article.subtitle ?? undefined,
+    image: article.image_url ?? undefined,
+    datePublished: article.published_at ?? undefined,
+    author: article.byline
+      ? { "@type": "Person", name: article.byline }
+      : { "@type": "Organization", name: "Fits You" },
+    publisher: { "@type": "Organization", name: "Fits You" },
+  };
+
   return (
     <article style={{ paddingTop: 64 }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
       {/* Header */}
       <header style={{ background: OBSIDIAN, padding: "80px 32px 56px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>

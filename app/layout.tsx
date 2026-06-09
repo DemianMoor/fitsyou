@@ -22,8 +22,10 @@ const archivo = Archivo({
   variable: "--font-archivo",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fitsyou.net";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://fitsyou.net"),
+  metadataBase: new URL(SITE_URL),
   title: "Fits You — Measured. Made for one.",
   description:
     "Personalized meal kits, supplements, and training — calibrated precisely to you. Delivered across the US.",
@@ -44,6 +46,28 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fraunces.variable} ${archivo.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: "Fits You",
+                url: SITE_URL,
+                logo: `${SITE_URL}/images/og-default.jpg`,
+                description:
+                  "Personalized meal kits, supplements, and training — calibrated precisely to you.",
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                name: "Fits You",
+                url: SITE_URL,
+              },
+            ]),
+          }}
+        />
         <Analytics />
         <Chrome>{children}</Chrome>
       </body>
