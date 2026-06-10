@@ -1,11 +1,20 @@
 import { LegalPage } from "@/components/LegalPage";
+import { fetchLegalPage, legalUpdatedLabel } from "@/lib/legal";
 
 export const metadata = {
   title: "Terms of Service — Fits You",
   description: "The terms for using the Fits You website and Plan Builder.",
 };
 
-export default function TermsPage() {
+export const revalidate = 0;
+
+export default async function TermsPage() {
+  // Admin-managed content takes over once published; otherwise the built-in
+  // draft copy below renders.
+  const db = await fetchLegalPage("terms");
+  if (db) {
+    return <LegalPage title={db.title} updated={legalUpdatedLabel(db.effective_date)} bodyHtml={db.body} />;
+  }
   return (
     <LegalPage
       title="Terms of Service"

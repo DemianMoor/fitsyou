@@ -1,11 +1,20 @@
 import { LegalPage } from "@/components/LegalPage";
+import { fetchLegalPage, legalUpdatedLabel } from "@/lib/legal";
 
 export const metadata = {
   title: "Privacy Policy — Fits You",
   description: "How Fits You collects, uses, and protects your information, including sensitive health and fitness details.",
 };
 
-export default function PrivacyPage() {
+export const revalidate = 0;
+
+export default async function PrivacyPage() {
+  // Admin-managed content takes over once published; otherwise the built-in
+  // draft copy below renders.
+  const db = await fetchLegalPage("privacy");
+  if (db) {
+    return <LegalPage title={db.title} updated={legalUpdatedLabel(db.effective_date)} bodyHtml={db.body} />;
+  }
   return (
     <LegalPage
       title="Privacy Policy"

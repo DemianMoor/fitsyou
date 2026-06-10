@@ -120,6 +120,21 @@
   }
 }
 
+/* /how flow-diagram step cards are anchor links to each step's deep-dive
+   section. Subtle hover affordance; on phone widths the cards stack, so the
+   connector arrow moves to the bottom edge and rotates to point downward. */
+.fy-flow-card { transition: filter 0.15s ease; }
+.fy-flow-card:hover { filter: brightness(1.18); }
+
+@media (max-width: 767px) {
+  .fy-flow-arrow {
+    top: auto !important;
+    right: 50% !important;
+    bottom: -11px !important;
+    transform: translateX(50%) rotate(90deg) !important;
+  }
+}
+
 /* Mobile guard for admin-authored article HTML (dangerouslySetInnerHTML):
    keep long words, wide media, tables, and code blocks inside the viewport. */
 .fy-article-body {
@@ -138,5 +153,77 @@
 .fy-article-body pre {
   max-width: 100%;
   overflow-x: auto;
+}
+
+/* Admin-managed legal page body (HTML from the central editor). Mirrors the
+   on-brand styling LegalPage uses for its hand-authored sections. */
+.fy-legal-prose {
+  font-family: var(--font-archivo), sans-serif;
+  font-size: 15px;
+  color: #6b6a66;
+  line-height: 1.78;
+}
+.fy-legal-prose > :first-child {
+  margin-top: 0;
+}
+.fy-legal-prose h2 {
+  font-family: var(--font-fraunces), serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #101114;
+  letter-spacing: -0.015em;
+  margin: 40px 0 14px;
+}
+.fy-legal-prose h3 {
+  font-family: var(--font-fraunces), serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: #101114;
+  margin: 28px 0 10px;
+}
+.fy-legal-prose p {
+  margin: 0 0 12px;
+}
+.fy-legal-prose strong {
+  color: #101114;
+  font-weight: 700;
+}
+.fy-legal-prose a {
+  color: #b79256;
+  text-decoration: underline;
+}
+.fy-legal-prose ol {
+  margin: 8px 0 12px;
+  padding-left: 22px;
+  list-style: decimal;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fy-legal-prose ul {
+  margin: 8px 0 12px;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fy-legal-prose ul li {
+  position: relative;
+  padding-left: 22px;
+}
+.fy-legal-prose ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 6px;
+  height: 1px;
+  background: #b79256;
+}
+.fy-legal-prose blockquote {
+  border-left: 2px solid rgba(183, 146, 86, 0.4);
+  padding-left: 16px;
+  margin: 16px 0;
 }
 
