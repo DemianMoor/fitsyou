@@ -20,7 +20,6 @@ export function SubscribePopup() {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  const [smsOptIn, setSmsOptIn] = useState(false);
 
   useEffect(() => {
     if (pathname === "/plan") return;
@@ -42,6 +41,12 @@ export function SubscribePopup() {
     if (!(data.get("consent_email"))) {
       setStatus("error");
       setErrorMsg("Please agree to receive emails to subscribe.");
+      return;
+    }
+    const phone = String(data.get("phone") ?? "").trim();
+    if (phone && !data.get("consent_sms")) {
+      setStatus("error");
+      setErrorMsg("To receive texts, please check the SMS consent box — or remove your phone number.");
       return;
     }
     setStatus("submitting");
@@ -125,9 +130,7 @@ export function SubscribePopup() {
 
               <input name="email" type="email" required placeholder="your@email.com" style={inputStyle} />
               <input name="name" type="text" placeholder="First name (optional)" style={inputStyle} />
-              {smsOptIn && (
-                <input name="phone" type="tel" placeholder="Mobile number" style={inputStyle} />
-              )}
+              <input name="phone" type="tel" placeholder="Mobile number (optional)" style={inputStyle} />
 
               <label style={labelStyle}>
                 <input name="consent_email" type="checkbox" required style={{ marginTop: 2, accentColor: BRASS }} />
@@ -135,11 +138,18 @@ export function SubscribePopup() {
               </label>
 
               <label style={labelStyle}>
-                <input name="consent_sms" type="checkbox" onChange={(e) => setSmsOptIn(e.target.checked)} style={{ marginTop: 2, accentColor: BRASS }} />
+                <input name="consent_sms" type="checkbox" style={{ marginTop: 2, accentColor: BRASS }} />
                 <span>
-                  (Optional) Text me updates. By checking this box I consent to receive recurring automated marketing text messages from Fits You at the number provided. Consent is not a condition of purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.
+                  By providing your phone number and checking this box, you are consenting to receive marketing text messages to that number from Fits You. Message frequency varies. Message and data rates may apply. Text HELP for help. Text STOP to unsubscribe. SMS opt-in data will not be shared or sold with 3rd parties.
                 </span>
               </label>
+
+              <details style={{ marginBottom: 16, borderTop: "1px solid rgba(245,242,235,0.12)", borderBottom: "1px solid rgba(245,242,235,0.12)", padding: "10px 0" }}>
+                <summary style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", cursor: "pointer", listStyle: "revert" }}>SMS messaging &amp; data policy</summary>
+                <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.5)", lineHeight: 1.6, margin: "10px 0 0" }}>
+                  SMS is currently available in the United States only. By providing your phone number, checking the SMS consent box, and clicking the sign-up button, you agree to receive periodic text messages from Fits You — operated by FIT BIELSCY Sp z o.o. — at the number you submitted. These may include automated messages sent using an automatic telephone dialing system. Message and data rates may apply. Message frequency varies, typically one message per week. Messages will consist of weekly content digests, occasional content alerts, and account notifications. Consent to receive SMS is not a condition of subscribing to Fits You or accessing any of our content. Text HELP for help. Reply STOP at any time to unsubscribe — you&apos;ll get one confirmation message and then no further texts. See our <a href="/terms" style={{ color: BRASS }}>SMS Terms</a> and <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a> for full details.
+                </p>
+              </details>
 
               {status === "error" && (
                 <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, color: EMBER, margin: "4px 0 12px" }}>{errorMsg}</p>
@@ -156,7 +166,7 @@ export function SubscribePopup() {
               </button>
 
               <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, color: ASH, lineHeight: 1.6, margin: "16px 0 0", textAlign: "center" }}>
-                We respect your privacy. Your details are never sold.
+                By signing up you agree to our <a href="/terms" style={{ color: BRASS }}>SMS Terms</a> and <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a>. Fits You is operated by FIT BIELSCY Sp z o.o. We won&apos;t sell your data.
               </p>
             </form>
           </>

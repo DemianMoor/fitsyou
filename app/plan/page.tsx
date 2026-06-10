@@ -53,6 +53,7 @@ export default function PlanBuilderPage() {
 
   async function submitIntake() {
     if (!contact.consentEmail) { setSubmitState("error"); setSubmitErr("Please agree to be contacted by email."); return; }
+    if (contact.phone.trim() && !contact.consentSms) { setSubmitState("error"); setSubmitErr("To receive texts, please check the SMS consent box — or remove your phone number."); return; }
     setSubmitState("submitting"); setSubmitErr("");
     try {
       const res = await fetch("/api/intake", {
@@ -286,23 +287,30 @@ export default function PlanBuilderPage() {
                       Save your plan — we&apos;ll send the next steps
                     </label>
                     <input type="email" required placeholder="your@email.com" value={contact.email} onChange={e => setContact(c => ({ ...c, email: e.target.value }))} style={{ ...inputSt, marginBottom: 12 }} />
-                    {contact.consentSms && (
-                      <input type="tel" placeholder="Mobile number" value={contact.phone} onChange={e => setContact(c => ({ ...c, phone: e.target.value }))} style={{ ...inputSt, marginBottom: 12 }} />
-                    )}
+                    <input type="tel" placeholder="Mobile number (optional)" value={contact.phone} onChange={e => setContact(c => ({ ...c, phone: e.target.value }))} style={{ ...inputSt, marginBottom: 12 }} />
                     <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", lineHeight: 1.55, display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 10, cursor: "pointer" }}>
                       <input type="checkbox" required checked={contact.consentEmail} onChange={e => setContact(c => ({ ...c, consentEmail: e.target.checked }))} style={{ marginTop: 2, accentColor: BRASS }} />
                       <span>I agree to be contacted by email about my plan. I can unsubscribe anytime. See our <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a>.</span>
                     </label>
                     <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", lineHeight: 1.55, display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 14, cursor: "pointer" }}>
                       <input type="checkbox" checked={contact.consentSms} onChange={e => setContact(c => ({ ...c, consentSms: e.target.checked }))} style={{ marginTop: 2, accentColor: BRASS }} />
-                      <span>(Optional) Text me updates. By checking this box I consent to receive recurring automated marketing texts from Fits You at the number provided. Consent is not a condition of purchase. Msg &amp; data rates may apply. Reply STOP to opt out.</span>
+                      <span>By providing your phone number and checking this box, you are consenting to receive marketing text messages to that number from Fits You. Message frequency varies. Message and data rates may apply. Text HELP for help. Text STOP to unsubscribe. SMS opt-in data will not be shared or sold with 3rd parties.</span>
                     </label>
+                    <details style={{ marginBottom: 16, borderTop: "1px solid rgba(245,242,235,0.12)", borderBottom: "1px solid rgba(245,242,235,0.12)", padding: "10px 0" }}>
+                      <summary style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", cursor: "pointer", listStyle: "revert" }}>SMS messaging &amp; data policy</summary>
+                      <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.5)", lineHeight: 1.6, margin: "10px 0 0" }}>
+                        SMS is currently available in the United States only. By providing your phone number, checking the SMS consent box, and clicking the sign-up button, you agree to receive periodic text messages from Fits You — operated by FIT BIELSCY Sp z o.o. — at the number you submitted. These may include automated messages sent using an automatic telephone dialing system. Message and data rates may apply. Message frequency varies, typically one message per week. Messages will consist of weekly content digests, occasional content alerts, and account notifications. Consent to receive SMS is not a condition of subscribing to Fits You or accessing any of our content. Text HELP for help. Reply STOP at any time to unsubscribe — you&apos;ll get one confirmation message and then no further texts. See our <a href="/terms" style={{ color: BRASS }}>SMS Terms</a> and <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a> for full details.
+                      </p>
+                    </details>
                     {submitState === "error" && (
                       <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, color: EMBER, margin: "0 0 12px" }}>{submitErr}</p>
                     )}
                     <button type="submit" disabled={submitState === "submitting"} style={{ background: EMBER, color: BONE, border: "none", cursor: submitState === "submitting" ? "default" : "pointer", fontFamily: "var(--font-archivo), sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", padding: "18px 32px", borderRadius: 4, display: "flex", alignItems: "center", gap: 8, width: "100%", justifyContent: "center", opacity: submitState === "submitting" ? 0.7 : 1, transition: "background 0.15s" }} onMouseEnter={e => { if (submitState !== "submitting") e.currentTarget.style.background = "#C04F2A"; }} onMouseLeave={e => { e.currentTarget.style.background = EMBER; }}>
                       {submitState === "submitting" ? "Saving…" : "Get my tailored plan"} <ArrowRight size={13} />
                     </button>
+                    <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, color: "rgba(245,242,235,0.4)", lineHeight: 1.6, margin: "16px 0 0", textAlign: "center" }}>
+                      By signing up you agree to our <a href="/terms" style={{ color: BRASS }}>SMS Terms</a> and <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a>. Fits You is operated by FIT BIELSCY Sp z o.o. We won&apos;t sell your data.
+                    </p>
                   </form>
                 )}
               </div>

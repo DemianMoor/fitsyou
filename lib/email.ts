@@ -12,6 +12,9 @@ import { Resend } from "resend";
 const KEY = process.env.RESEND_API_KEY;
 const FROM = process.env.EMAIL_FROM;        // e.g. "Fits You <hello@fitsyou.net>" (verified domain)
 const NOTIFY = process.env.LEAD_NOTIFY_TO;  // operator inbox for new-lead alerts
+// Replies go to the brand's real inbox — the bare address inside EMAIL_FROM
+// ("hello@fitsyou.net"), so a subscriber hitting Reply reaches a human.
+const REPLY_TO = FROM ? FROM.match(/<([^>]+)>/)?.[1] ?? FROM : undefined;
 
 const resend = KEY ? new Resend(KEY) : null;
 const enabled = () => Boolean(resend && FROM);
@@ -49,7 +52,7 @@ function block(heading: string, paras: string[]): string {
 async function safeSend(args: { to: string; subject: string; html: string }) {
   if (!enabled()) return;
   try {
-    await resend!.emails.send({ from: FROM!, to: args.to, subject: args.subject, html: args.html });
+    await resend!.emails.send({ from: FROM!, replyTo: REPLY_TO, to: args.to, subject: args.subject, html: args.html });
   } catch {
     // Never let email failure affect the lead capture.
   }
