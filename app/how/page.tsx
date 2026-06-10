@@ -26,6 +26,7 @@ export default function HowItFitsPage() {
   const router = useRouter();
   const navigate = (path: string) => router.push(path);
   const go = (path: string) => { navigate(path); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const jumpTo = (e: React.MouseEvent, id: string) => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); };
   return (
     <div style={{ paddingTop: 64 }}>
       {/* Header */}
@@ -46,16 +47,16 @@ export default function HowItFitsPage() {
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div className="fy-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 2 }}>
             {steps.map((s, i) => (
-              <div key={s.num} style={{ background: i % 2 === 0 ? OBSIDIAN : PINE, padding: "48px 36px", position: "relative" }}>
+              <a key={s.num} href={`#step-${s.num}`} onClick={e => jumpTo(e, `step-${s.num}`)} className="fy-flow-card" style={{ background: i % 2 === 0 ? OBSIDIAN : PINE, padding: "48px 36px", position: "relative", display: "block", textDecoration: "none", cursor: "pointer" }}>
                 <span style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 64, fontWeight: 300, color: BRASS, opacity: 0.25, lineHeight: 1, display: "block", marginBottom: 16 }}>{s.num}</span>
                 <div style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: BRASS, marginBottom: 6 }}>{s.sub}</div>
                 <h3 style={{ fontFamily: "var(--font-fraunces), serif", fontSize: 24, fontWeight: 400, color: BONE, margin: "0 0 16px", lineHeight: 1.1 }}>{s.label}</h3>
                 {i < 3 && (
-                  <div style={{ position: "absolute", top: "50%", right: -12, transform: "translateY(-50%)", zIndex: 1, width: 22, height: 22, background: BONE, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%" }}>
+                  <div className="fy-flow-arrow" style={{ position: "absolute", top: "50%", right: -12, transform: "translateY(-50%)", zIndex: 1, width: 22, height: 22, background: BONE, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%" }}>
                     <ArrowRight size={11} color={OBSIDIAN} />
                   </div>
                 )}
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -63,7 +64,7 @@ export default function HowItFitsPage() {
 
       {/* Steps deep-dive */}
       {steps.map((step, i) => (
-        <section key={step.num} style={{ background: step.bg }}>
+        <section key={step.num} id={`step-${step.num}`} style={{ background: step.bg, scrollMarginTop: 64 }}>
           <div className="fy-stack" style={{ maxWidth: 1280, margin: "0 auto", padding: "96px 32px", display: "grid", gridTemplateColumns: i % 2 === 0 ? "1fr 1fr" : "1fr 1fr", gap: 80, alignItems: "center" }}>
             <div style={{ order: i % 2 === 0 ? 1 : 2 }}>
               <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 28 }}>
