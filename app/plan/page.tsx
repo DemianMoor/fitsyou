@@ -34,6 +34,10 @@ const inputSt: React.CSSProperties = {
   padding: "14px 16px", width: "100%", outline: "none", boxSizing: "border-box",
 };
 
+// Option popup renders on the OS-native (white) background in some browsers, so
+// the inherited near-white text would be invisible — force dark-theme colors.
+const optionSt: React.CSSProperties = { background: OBSIDIAN, color: BONE };
+
 export default function PlanBuilderPage() {
   const router = useRouter();
   const navigate = (path: string) => router.push(path);
@@ -153,10 +157,10 @@ export default function PlanBuilderPage() {
                 <div>
                   <label style={labelSt}>Biological sex</label>
                   <select value={form.sex} onChange={e => setForm(f => ({ ...f, sex: e.target.value }))} style={{ ...inputSt, cursor: "pointer" }}>
-                    <option value="">Select</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Prefer not to say</option>
+                    <option value="" style={optionSt}>Select</option>
+                    <option style={optionSt}>Male</option>
+                    <option style={optionSt}>Female</option>
+                    <option style={optionSt}>Prefer not to say</option>
                   </select>
                 </div>
               </div>
@@ -219,14 +223,14 @@ export default function PlanBuilderPage() {
             <div>
               <label style={labelSt}>Primary training type</label>
               <select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} style={{ ...inputSt, cursor: "pointer" }}>
-                <option value="">Select your focus</option>
-                <option>Strength / Powerlifting</option>
-                <option>Running / Endurance</option>
-                <option>CrossFit / HIIT</option>
-                <option>Yoga / Mobility</option>
-                <option>Cycling</option>
-                <option>Mixed / General fitness</option>
-                <option>Just starting out</option>
+                <option value="" style={optionSt}>Select your focus</option>
+                <option style={optionSt}>Strength / Powerlifting</option>
+                <option style={optionSt}>Running / Endurance</option>
+                <option style={optionSt}>CrossFit / HIIT</option>
+                <option style={optionSt}>Yoga / Mobility</option>
+                <option style={optionSt}>Cycling</option>
+                <option style={optionSt}>Mixed / General fitness</option>
+                <option style={optionSt}>Just starting out</option>
               </select>
             </div>
           </div>
