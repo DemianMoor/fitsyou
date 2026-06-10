@@ -97,7 +97,7 @@ export default function HomePage() {
           </div>
 
           <div style={{ opacity: vis ? 1 : 0, transform: vis ? "none" : "translateX(32px)", transition: "opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s" }}>
-            <FitMark size={32} padded={false}>
+            <FitMark size={32} padded={false} style={{ display: "block" }}>
               <div style={{ padding: 14 }}>
                 <div style={{ aspectRatio: "4/5", overflow: "hidden", borderRadius: 6, position: "relative" }}>
                   <BrandImage

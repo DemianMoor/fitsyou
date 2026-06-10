@@ -6,9 +6,10 @@ interface FitMarkProps {
   className?: string;
   padded?: boolean;
   dark?: boolean;
+  style?: React.CSSProperties;
 }
 
-export function FitMark({ size = 24, children, className = "", padded = true, dark = false }: FitMarkProps) {
+export function FitMark({ size = 24, children, className = "", padded = true, dark = false, style }: FitMarkProps) {
   const color = "#B79256";
   const arm = Math.round(size * 0.55);
   const gap = padded ? Math.round(size * 0.7) : 0;
@@ -33,7 +34,7 @@ export function FitMark({ size = 24, children, className = "", padded = true, da
   }
 
   return (
-    <div className={`relative inline-block ${className}`} style={{ padding: gap }}>
+    <div className={`relative inline-block ${className}`} style={{ padding: gap, ...style }}>
       <span style={{ position: "absolute", top: 0, left: 0, width: size, height: 1, background: color }} />
       <span style={{ position: "absolute", top: 0, left: 0, width: 1, height: size, background: color }} />
       <span style={{ position: "absolute", top: 0, right: 0, width: size, height: 1, background: color }} />
