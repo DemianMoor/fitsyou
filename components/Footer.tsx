@@ -41,6 +41,9 @@ export function Footer() {
             <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 13, color: "rgba(245,242,235,0.45)", lineHeight: 1.75, maxWidth: 280, margin: 0 }}>
               Personalized meal kits, supplements, and training — calibrated precisely to you. Delivered across the US.
             </p>
+            <a href="tel:+12134012910" style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 13, color: "rgba(245,242,235,0.55)", textDecoration: "none", transition: "color 0.15s" }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#F5F2EB"; }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.55)"; }}>
+              (213) 401-2910
+            </a>
             <p style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.25)", lineHeight: 1.65, maxWidth: 300, margin: 0 }}>
               Results vary. Individual outcomes depend on many factors. Fits You provides general information, not medical advice — consult a qualified healthcare provider before starting any nutrition, supplement, or training program. Supplement statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease.
             </p>
