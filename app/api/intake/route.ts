@@ -16,7 +16,8 @@ type Body = {
   training_type?: string;
   metrics?: Record<string, unknown>;
   consent_email?: boolean;
-  consent_sms?: boolean;
+  consent_sms?: boolean;           // service updates + account notifications
+  consent_sms_marketing?: boolean; // marketing + promotions
   website?: string; // honeypot
 };
 
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
       { status: 400 },
     );
   }
-  if (body.consent_sms && !body.phone?.trim()) {
+  if ((body.consent_sms || body.consent_sms_marketing) && !body.phone?.trim()) {
     return NextResponse.json(
       { error: "A phone number is required for text updates." },
       { status: 400 },
@@ -75,8 +76,10 @@ export async function POST(request: NextRequest) {
     metrics: body.metrics ?? {},
     consent_email: true,
     consent_sms: Boolean(body.consent_sms),
+    consent_sms_marketing: Boolean(body.consent_sms_marketing),
     email_consent_at: now,
     sms_consent_at: body.consent_sms ? now : null,
+    sms_marketing_consent_at: body.consent_sms_marketing ? now : null,
     ip_address: ip,
     user_agent: request.headers.get("user-agent") || null,
     source: "plan_builder",

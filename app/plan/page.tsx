@@ -47,13 +47,13 @@ export default function PlanBuilderPage() {
 
   // Plan Builder intake capture (Phase 3a). Non-promissory: we capture the lead
   // and show an illustrative plan shape — no guaranteed results, no loss rates.
-  const [contact, setContact] = useState({ email: "", phone: "", consentEmail: false, consentSms: false, website: "" });
+  const [contact, setContact] = useState({ email: "", phone: "", consentEmail: false, consentSms: false, consentSmsMarketing: false, website: "" });
   const [submitState, setSubmitState] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [submitErr, setSubmitErr] = useState("");
 
   async function submitIntake() {
     if (!contact.consentEmail) { setSubmitState("error"); setSubmitErr("Please agree to be contacted by email."); return; }
-    if (contact.phone.trim() && !contact.consentSms) { setSubmitState("error"); setSubmitErr("To receive texts, please check the SMS consent box — or remove your phone number."); return; }
+    if (contact.phone.trim() && !(contact.consentSms && contact.consentSmsMarketing)) { setSubmitState("error"); setSubmitErr("To receive texts, please check both SMS consent boxes — or remove your phone number."); return; }
     setSubmitState("submitting"); setSubmitErr("");
     try {
       const res = await fetch("/api/intake", {
@@ -70,6 +70,7 @@ export default function PlanBuilderPage() {
           metrics: { age: form.age, weight_lbs: form.weight, height_ft: form.heightFt, height_in: form.heightIn, sex: form.sex },
           consent_email: contact.consentEmail,
           consent_sms: contact.consentSms,
+          consent_sms_marketing: contact.consentSmsMarketing,
           website: contact.website, // honeypot
         }),
       });
@@ -292,9 +293,13 @@ export default function PlanBuilderPage() {
                       <input type="checkbox" required checked={contact.consentEmail} onChange={e => setContact(c => ({ ...c, consentEmail: e.target.checked }))} style={{ marginTop: 2, accentColor: BRASS }} />
                       <span>I agree to be contacted by email about my plan. I can unsubscribe anytime. See our <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a>.</span>
                     </label>
-                    <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", lineHeight: 1.55, display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 14, cursor: "pointer" }}>
+                    <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", lineHeight: 1.55, display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 10, cursor: "pointer" }}>
                       <input type="checkbox" checked={contact.consentSms} onChange={e => setContact(c => ({ ...c, consentSms: e.target.checked }))} style={{ marginTop: 2, accentColor: BRASS }} />
-                      <span>By providing your phone number and checking this box, you are consenting to receive marketing text messages to that number from Fits You. Message frequency varies. Message and data rates may apply. Text HELP for help. Text STOP to unsubscribe. SMS opt-in data will not be shared or sold with 3rd parties.</span>
+                      <span>I give my express consent to receive recurring automated service updates and account notifications texts to the phone number from FitsYou. Message and data rates may apply. Msg frequency varies. I understand I can opt-out by replying &apos;STOP&apos; to any message, or get more info by replying &apos;HELP.&apos; Consent is not required for purchasing products or services. My number will not be shared with third parties or affiliates. View our <a href="/terms" style={{ color: BRASS }}>Terms of Services</a> and <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a>.</span>
+                    </label>
+                    <label style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", lineHeight: 1.55, display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 14, cursor: "pointer" }}>
+                      <input type="checkbox" checked={contact.consentSmsMarketing} onChange={e => setContact(c => ({ ...c, consentSmsMarketing: e.target.checked }))} style={{ marginTop: 2, accentColor: BRASS }} />
+                      <span>I consent to receive marketing communications and promotions to the phone number provided.</span>
                     </label>
                     <details style={{ marginBottom: 16, borderTop: "1px solid rgba(245,242,235,0.12)", borderBottom: "1px solid rgba(245,242,235,0.12)", padding: "10px 0" }}>
                       <summary style={{ fontFamily: "var(--font-archivo), sans-serif", fontSize: 11, color: "rgba(245,242,235,0.6)", cursor: "pointer", listStyle: "revert" }}>SMS messaging &amp; data policy</summary>

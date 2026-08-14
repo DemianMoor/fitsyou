@@ -11,7 +11,8 @@ type Body = {
   name?: string;
   phone?: string;
   consent_email?: boolean;
-  consent_sms?: boolean;
+  consent_sms?: boolean;           // service updates + account notifications
+  consent_sms_marketing?: boolean; // marketing + promotions
   website?: string; // honeypot — real users never fill this
 };
 
@@ -37,8 +38,8 @@ export async function POST(request: NextRequest) {
       { status: 400 },
     );
   }
-  // If SMS opt-in is checked, a phone number is required.
-  if (body.consent_sms && !body.phone?.trim()) {
+  // If either SMS opt-in is checked, a phone number is required.
+  if ((body.consent_sms || body.consent_sms_marketing) && !body.phone?.trim()) {
     return NextResponse.json(
       { error: "A phone number is required for text updates." },
       { status: 400 },
@@ -69,8 +70,10 @@ export async function POST(request: NextRequest) {
     pillars: [] as string[],
     consent_email: true,
     consent_sms: Boolean(body.consent_sms),
+    consent_sms_marketing: Boolean(body.consent_sms_marketing),
     email_consent_at: now,
     sms_consent_at: body.consent_sms ? now : null,
+    sms_marketing_consent_at: body.consent_sms_marketing ? now : null,
     ip_address: ip,
     user_agent: request.headers.get("user-agent") || null,
     source: "fitsyou_popup",
@@ -88,7 +91,7 @@ export async function POST(request: NextRequest) {
   // Transactional email (best-effort; never blocks the response).
   await Promise.allSettled([
     sendSubscribeWelcome(email, row.name),
-    sendOperatorAlert("subscriber", { email, name: row.name, consent_sms: row.consent_sms, source: row.source }),
+    sendOperatorAlert("subscriber", { email, name: row.name, consent_sms: row.consent_sms, consent_sms_marketing: row.consent_sms_marketing, source: row.source }),
   ]);
 
   return NextResponse.json({ ok: true });

@@ -44,9 +44,9 @@ export function SubscribePopup() {
       return;
     }
     const phone = String(data.get("phone") ?? "").trim();
-    if (phone && !data.get("consent_sms")) {
+    if (phone && !(data.get("consent_sms") && data.get("consent_sms_marketing"))) {
       setStatus("error");
-      setErrorMsg("To receive texts, please check the SMS consent box — or remove your phone number.");
+      setErrorMsg("To receive texts, please check both SMS consent boxes — or remove your phone number.");
       return;
     }
     setStatus("submitting");
@@ -61,6 +61,7 @@ export function SubscribePopup() {
           phone: data.get("phone"),
           consent_email: Boolean(data.get("consent_email")),
           consent_sms: Boolean(data.get("consent_sms")),
+          consent_sms_marketing: Boolean(data.get("consent_sms_marketing")),
           website: data.get("website"), // honeypot
         }),
       });
@@ -140,7 +141,14 @@ export function SubscribePopup() {
               <label style={labelStyle}>
                 <input name="consent_sms" type="checkbox" style={{ marginTop: 2, accentColor: BRASS }} />
                 <span>
-                  By providing your phone number and checking this box, you are consenting to receive marketing text messages to that number from Fits You. Message frequency varies. Message and data rates may apply. Text HELP for help. Text STOP to unsubscribe. SMS opt-in data will not be shared or sold with 3rd parties.
+                  I give my express consent to receive recurring automated service updates and account notifications texts to the phone number from FitsYou. Message and data rates may apply. Msg frequency varies. I understand I can opt-out by replying &apos;STOP&apos; to any message, or get more info by replying &apos;HELP.&apos; Consent is not required for purchasing products or services. My number will not be shared with third parties or affiliates. View our <a href="/terms" style={{ color: BRASS }}>Terms of Services</a> and <a href="/privacy" style={{ color: BRASS }}>Privacy Policy</a>.
+                </span>
+              </label>
+
+              <label style={labelStyle}>
+                <input name="consent_sms_marketing" type="checkbox" style={{ marginTop: 2, accentColor: BRASS }} />
+                <span>
+                  I consent to receive marketing communications and promotions to the phone number provided.
                 </span>
               </label>
 
