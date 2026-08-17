@@ -66,3 +66,51 @@ export function createSupabaseServiceClient() {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 }
+
+/**
+ * Everything the /lp/[slug] route needs out of site_settings, in one round trip:
+ * analytics IDs, the direct-mode Keitaro script, and the serve-time tracking-URL
+ * rewrite config (see lib/tracking-rewrite). The central admin writes these; the
+ * public site reads them.
+ *
+ * No hardcoded fallbacks — a blank value means "don't inject", and for the
+ * tracking domain it means "serve landing pages exactly as uploaded". Never
+ * throws: a fetch failure degrades to that same off state.
+ */
+export async function getLpSettings(): Promise<{
+  gtmId: string;
+  clarityId: string;
+  keitaroScript: string;
+  tracking: { domain: string | null; source: string | null };
+}> {
+  const off = {
+    gtmId: "",
+    clarityId: "",
+    keitaroScript: "",
+    tracking: { domain: null, source: null },
+  };
+
+  try {
+    const supabase = createSupabaseServiceClient();
+    const { data } = await supabase.from("site_settings").select("key, value");
+
+    // `value` is jsonb, so supabase-js hands back an already-decoded JS value.
+    const get = (key: string): string => {
+      const raw = data?.find((row) => row.key === key)?.value;
+      if (raw === null || raw === undefined) return "";
+      return typeof raw === "string" ? raw : String(raw);
+    };
+
+    return {
+      gtmId: get("analytics_gtm_id"),
+      clarityId: get("analytics_clarity_id"),
+      keitaroScript: get("keitaro_tracking_script"),
+      tracking: {
+        domain: get("tracking_domain") || null,
+        source: get("tracking_source") || null,
+      },
+    };
+  } catch {
+    return off;
+  }
+}
