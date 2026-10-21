@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServiceClient, getLpSettings } from "@/lib/supabase";
-import { rewriteTrackingUrls } from "@/lib/tracking-rewrite";
+import {
+  backstopScript,
+  pickSubIds,
+  resolveTrackingHost,
+  rewriteTrackingUrls,
+  routeScriptsThroughPassthrough,
+} from "@/lib/subid-guarantee/core";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,7 +24,7 @@ export const dynamic = "force-dynamic";
 const STORAGE_PUBLIC_BASE = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/landing-pages`;
 
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   context: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await context.params;
@@ -61,6 +67,19 @@ export async function GET(
   // serves as an ordinary entry_file with no special handling.
   html = rewriteAssetPaths(html, slug);
 
+  // The visitor's sub_id* go into every tracker URL on the page (lib/subid-guarantee).
+  // Safe to cache: the edge keys on the full URL, query included.
+  const subIds = pickSubIds(req.nextUrl.searchParams);
+
+  // The page's own .js files go through /lp/<slug>/~js/ so tracker URLs inside
+  // them get the same rewrite.
+  html = routeScriptsThroughPassthrough(html, {
+    storageBase: STORAGE_PUBLIC_BASE,
+    slug,
+    lpPath: "/lp/",
+    subIds,
+  });
+
   const { gtmId, clarityId, keitaroScript, tracking } = await getLpSettings();
 
   // Per-page GTM container wins over the site-wide one.
@@ -80,11 +99,18 @@ export async function GET(
   html = injectUtmForwarder(html);
 
   // Runs last so it covers every injected block. Points every known tracker host
-  // (lib/tracking-rewrite.ts) at this brand's tracking domain and tags campaign
-  // clicks with its source; the injected visit script is skipped, since the
-  // stored script already carries this brand's own host. With tracking_domain
-  // unset this is a no-op and the output is byte-identical.
-  html = rewriteTrackingUrls(html, tracking);
+  // (lib/subid-guarantee/core.ts) at this brand's tracking domain and tags
+  // campaign clicks with its source and the request's sub_id*; the injected
+  // visit script is host-swapped only. With tracking_domain unset this is a
+  // no-op and the output is byte-identical.
+  html = rewriteTrackingUrls(html, { ...tracking, subIds });
+
+  // Runtime backstop for tracker URLs a page builds from scratch. Only when the
+  // request carries sub_id*.
+  const trackingHost = resolveTrackingHost(tracking.domain);
+  if (subIds.length && trackingHost) {
+    html = injectAfterHead(html, backstopScript(trackingHost));
+  }
 
   // Injected last so the hints land first in <head>, ahead of the asset refs.
   html = injectResourceHints(html);
@@ -101,6 +127,13 @@ export async function GET(
       "X-Content-Type-Options": "nosniff",
     },
   });
+}
+
+function injectAfterHead(html: string, block: string): string {
+  const headMatch = html.match(/<head[^>]*>/i);
+  if (!headMatch) return html;
+  const at = headMatch.index! + headMatch[0].length;
+  return html.substring(0, at) + block + html.substring(at);
 }
 
 /**

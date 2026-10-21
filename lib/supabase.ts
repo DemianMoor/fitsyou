@@ -70,7 +70,7 @@ export function createSupabaseServiceClient() {
 /**
  * Everything the /lp/[slug] route needs out of site_settings, in one round trip:
  * analytics IDs, the direct-mode Keitaro script, and the serve-time tracking-URL
- * rewrite config (see lib/tracking-rewrite). The central admin writes these; the
+ * rewrite config (see lib/subid-guarantee/core.ts). The central admin writes these; the
  * public site reads them.
  *
  * No hardcoded fallbacks — a blank value means "don't inject", and for the
