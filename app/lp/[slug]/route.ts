@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServiceClient, getLpSettings } from "@/lib/supabase";
 import { injectPersonalization } from "@/lib/url-personalization/core";
+import { startEntryEtag, versionedUrl } from "@/lib/lp-storage-version/core";
 import {
   backstopScript,
   pickSubIds,
@@ -35,6 +36,9 @@ export async function GET(
   }
 
   const supabase = createSupabaseServiceClient();
+  // Lists the page's stored files alongside the row lookup below, so the entry
+  // fetch can carry its ETag (lib/lp-storage-version).
+  const entryEtag = startEntryEtag(supabase, slug);
   const { data: page } = await supabase
     .from("landing_pages")
     .select("slug, entry_file, is_active, gtm_id")
@@ -51,7 +55,11 @@ export async function GET(
 
   let html: string;
   try {
-    const res = await fetch(entryUrl, { cache: "no-store" });
+    // The ETag in the address makes a fresh save a CDN miss; null fetches the
+    // plain address, as before.
+    const res = await fetch(versionedUrl(entryUrl, await entryEtag(entry)), {
+      cache: "no-store",
+    });
     if (!res.ok) {
       return new NextResponse("Landing page bundle missing", { status: 502 });
     }
