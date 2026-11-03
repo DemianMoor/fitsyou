@@ -1,5 +1,6 @@
 import { createBrowserClient, createServerClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
+import { personalizationEnabled, URL_PERSONALIZATION_KEY } from "@/lib/url-personalization/core";
 
 /**
  * Supabase clients for the Fits You public site.
@@ -82,12 +83,14 @@ export async function getLpSettings(): Promise<{
   clarityId: string;
   keitaroScript: string;
   tracking: { domain: string | null; source: string | null };
+  urlPersonalization: boolean;
 }> {
   const off = {
     gtmId: "",
     clarityId: "",
     keitaroScript: "",
     tracking: { domain: null, source: null },
+    urlPersonalization: false,
   };
 
   try {
@@ -109,6 +112,8 @@ export async function getLpSettings(): Promise<{
         domain: get("tracking_domain") || null,
         source: get("tracking_source") || null,
       },
+      // URL personalization (lib/url-personalization/core.ts): off unless explicitly "true".
+      urlPersonalization: personalizationEnabled(get(URL_PERSONALIZATION_KEY)),
     };
   } catch {
     return off;
