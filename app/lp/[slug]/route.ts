@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServiceClient, getLpSettings } from "@/lib/supabase";
+import { injectPersonalization } from "@/lib/url-personalization/core";
 import {
   backstopScript,
   pickSubIds,
@@ -80,7 +81,8 @@ export async function GET(
     subIds,
   });
 
-  const { gtmId, clarityId, keitaroScript, tracking } = await getLpSettings();
+  const { gtmId, clarityId, keitaroScript, tracking, urlPersonalization } =
+    await getLpSettings();
 
   // Per-page GTM container wins over the site-wide one.
   const gtm = page.gtm_id || gtmId;
@@ -97,6 +99,11 @@ export async function GET(
   }
 
   html = injectUtmForwarder(html);
+
+  // Fills the page's data-fill markers from ?zip=&st= (lib/url-personalization).
+  // Only when the brand's switch is on; off returns the HTML untouched. Before the
+  // rewriter so tracking still runs last; the script holds no URL for it to change.
+  html = injectPersonalization(html, urlPersonalization);
 
   // Runs last so it covers every injected block. Points every known tracker host
   // (lib/subid-guarantee/core.ts) at this brand's tracking domain and tags
